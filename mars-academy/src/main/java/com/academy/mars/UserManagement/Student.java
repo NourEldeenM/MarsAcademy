@@ -6,22 +6,26 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Setter
 @Getter
 @Entity
-@Table
-@Inheritance(strategy = InheritanceType.JOINED)
-@SuperBuilder
+@Table(name = "students")
 public class Student extends User {
     // commented until we make those classes
-//    private List<Course> enrolledCourses;
-//    private List<Grade> gradesList;
-//    private List<Notification> notificationsList;
+    // @OneToMany(mappedBy = "student")
+    // private List<Course> enrolledCourses;
 
+    // @OneToMany(mappedBy = "student")
+    // private List<Grade> gradesList;
+
+    // @OneToMany(mappedBy = "student")
+    // private List<Notification> notificationsList;
     public Student() {
         super();
+        this.role = Role.Student;
     }
 
     public Student(Long id,
@@ -30,7 +34,7 @@ public class Student extends User {
                    String password,
                    String profilePicture,
                    Role role,
-                   Date timeJoined) {
+                   LocalDateTime timeJoined) {
         super(id, name, email, password, profilePicture, Role.Student, timeJoined);
     }
 }

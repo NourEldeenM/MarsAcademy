@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -13,6 +14,7 @@ import java.util.Date;
 @Entity
 @Table(name = "users")
 @SuperBuilder
+@Inheritance(strategy = InheritanceType.JOINED)
 public class User {
     @Id
     @SequenceGenerator(
@@ -32,9 +34,9 @@ public class User {
     private String password;
     private String profilePicture;
     @Enumerated(EnumType.STRING)
-    private Role role;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date timeJoined;
+    protected Role role;
+    //    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime timeJoined;
 
     public User() {
 
@@ -46,7 +48,7 @@ public class User {
                 String password,
                 String profilePicture,
                 Role role,
-                Date timeJoined) {
+                LocalDateTime timeJoined) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -54,5 +56,15 @@ public class User {
         this.profilePicture = profilePicture;
         this.role = role;
         this.timeJoined = timeJoined;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                '}';
     }
 }
