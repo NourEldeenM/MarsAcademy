@@ -57,4 +57,10 @@ public class CoursesController {
         return coursesServices.updateCourse(updatedCourse);
     }
 
+    // Delete a course by name
+    @DeleteMapping
+    public String deleteCourse(@RequestParam String name) {
+        coursesServices.deleteCourse(name);
+        return "Course with name '" + name + "' has been deleted successfully.";
+    }
 }
