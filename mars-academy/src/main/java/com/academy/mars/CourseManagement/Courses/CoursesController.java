@@ -16,6 +16,8 @@ public class CoursesController {
         this.coursesServices = coursesServices;
     }
 
+
+    //get all courses
     @GetMapping
     public ResponseEntity<?> getCourses(
             @RequestParam(required = false) String name ,
@@ -43,9 +45,16 @@ public class CoursesController {
         }
     }
 
+    //add new course
     @PostMapping
     public Courses addCourse(@RequestBody Courses course) {
         return coursesServices.addCourse(course);
+    }
+
+    // Update an existing course
+    @PutMapping
+    public Courses updateCourse(@RequestBody Courses updatedCourse) {
+        return coursesServices.updateCourse(updatedCourse);
     }
 
 }
