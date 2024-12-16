@@ -5,9 +5,9 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Collection;
 
 public enum UserRole {
-    ADMIN,
-    INSTRUCTOR,
-    STUDENT,
+    ROLE_ADMIN,
+    ROLE_INSTRUCTOR,
+    ROLE_STUDENT,
     ;
 
     public Collection<? extends GrantedAuthority> getAuthorities() {

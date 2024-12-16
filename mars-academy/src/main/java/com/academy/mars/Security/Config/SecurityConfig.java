@@ -33,6 +33,7 @@ public class SecurityConfig {
                                 .requestMatchers("/admin/**").permitAll()
                                 .requestMatchers("/instructor/**").permitAll()
                                 .requestMatchers("/student/**").permitAll()
+//                                .requestMatchers("/swagger-ui.html").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin().disable(); // Disable the default login page
