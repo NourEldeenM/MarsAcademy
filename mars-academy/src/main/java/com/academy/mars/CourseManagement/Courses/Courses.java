@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -11,7 +13,9 @@ import jakarta.persistence.Table;
 @Table(name = "courses")
 public class Courses {
     @Id
-    @Column(name = "name", unique = true)
+    @GeneratedValue(strategy = GenerationType.AUTO) // Automatically generates the ID
+    @Column(name = "id", nullable = false)
+    private Long id;
     private String name;
     private String title;
     private String description;
@@ -38,6 +42,13 @@ public class Courses {
     public Courses() {
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -82,7 +93,8 @@ public class Courses {
     @Override
     public String toString() {
         return "Courses{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", title='" + title + '\'' +
                 ", category='" + category + '\'' +
                 '}';

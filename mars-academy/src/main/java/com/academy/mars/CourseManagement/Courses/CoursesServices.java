@@ -8,64 +8,66 @@ import java.util.Optional;
 
 @Service
 public class CoursesServices {
-    private final  CoursesRepository coursesRepository;
+    private final CoursesRepository coursesRepository;
 
     public CoursesServices(CoursesRepository coursesRepository) {
         this.coursesRepository = coursesRepository;
     }
 
-    public List<Courses> getCourses(){
+    // Get all courses
+    public List<Courses> getCourses() {
         return coursesRepository.findAll();
     }
 
-    Courses getCourseByName(String name){
-        return coursesRepository.findByName(name.toLowerCase())
-                .orElseThrow(() -> new RuntimeException("Course with name " + name + " not found"));
+    // Get course by name (should return only one course)
+    public List<Courses> getCourseByName(String name) {
+        List<Courses> courses = coursesRepository.findByName(name.toLowerCase());
+        if (courses.isEmpty()) {
+            throw new RuntimeException("there are no course with name  " + name );
+        }
+        return courses;
     }
 
+    public Optional<Courses> getCourseById(Long id){
+        return coursesRepository.findById(id);
+    }
     @Transactional
-    public void deleteCourse(String name) {
-        coursesRepository.deleteByName(name);
+    public void deleteCourse(Long id) {
+        coursesRepository.deleteById(id);
     }
 
     @Transactional
     public Courses addCourse(Courses course) {
-        if (coursesRepository.findByName(course.getName()).isPresent()) {
-            throw new RuntimeException("Course with name " + course.getName() + " already exists");
-        }
         coursesRepository.save(course);
         return course;
     }
 
     @Transactional
     public Courses updateCourse(Courses updatedCourse) {
-
-        Optional<Courses> existingCourse = coursesRepository.findByName(updatedCourse.getName());
+        Optional<Courses> existingCourse = coursesRepository.findById(updatedCourse.getId());
 
         if (existingCourse.isPresent()) {
-
             Courses courseToUpdate = existingCourse.get();
 
-            if (!updatedCourse.getName().equals(courseToUpdate.getName())) {
-                throw new IllegalArgumentException("Course name cannot be changed.");
-            }
-
+            courseToUpdate.setName(updatedCourse.getName());
             courseToUpdate.setTitle(updatedCourse.getTitle());
             courseToUpdate.setDescription(updatedCourse.getDescription());
             courseToUpdate.setCategory(updatedCourse.getCategory());
+            courseToUpdate.setDuration(updatedCourse.getDuration());
+
             coursesRepository.save(courseToUpdate);
             return courseToUpdate;
         }
-        return null;
+        throw new RuntimeException("Course with ID " + updatedCourse.getId() + " not found");
     }
 
-
-    public List<Courses> getCoursesByCategory(String categoryName){
+    // Get courses by category
+    public List<Courses> getCoursesByCategory(String categoryName) {
         return coursesRepository.findByCategory(categoryName);
     }
 
-    public List<Courses> getCoursesByTitle(String categoryTitle){
+    // Get courses by title
+    public List<Courses> getCoursesByTitle(String categoryTitle) {
         return coursesRepository.findByTitle(categoryTitle);
     }
-
 }
