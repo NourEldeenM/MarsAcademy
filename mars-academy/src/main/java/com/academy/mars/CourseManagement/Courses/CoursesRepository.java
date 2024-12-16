@@ -14,5 +14,6 @@ public interface CoursesRepository extends JpaRepository<Courses,String> {
     @Query("SELECT c FROM Courses c WHERE LOWER(c.category) = LOWER(:category)")
     List<Courses> findByCategory(String category);
 
-
+    @Query("SELECT c FROM Courses c WHERE LOWER(c.title) LIKE LOWER(CONCAT('%', :title, '%'))")
+    List<Courses> findByTitle(String title);
 }
