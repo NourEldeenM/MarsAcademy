@@ -1,5 +1,7 @@
 package com.academy.mars.CourseManagement.Courses;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,13 +22,22 @@ public class Courses {
         this.name = name;
     }
 
-    public Courses(String name, String title, String description, String category, Integer duration) {
+    @JsonCreator
+    public Courses(@JsonProperty("name") String name,
+                   @JsonProperty("title") String title,
+                   @JsonProperty("description") String description,
+                   @JsonProperty("category") String category,
+                   @JsonProperty("duration") Integer duration) {
         this.name = name;
         this.title = title;
         this.description = description;
         this.category = category;
         this.duration = duration;
     }
+
+    public Courses() {
+    }
+
 
     public String getName() {
         return name;
