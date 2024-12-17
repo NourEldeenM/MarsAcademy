@@ -23,8 +23,15 @@ public class NotificationService {
         return notificationRepository.save(notification);
     }
 
-    public void markAsRead(Notification notification){
+    public void markAsRead(Long notificationId){
+        Notification notification = notificationRepository.findById(notificationId)
+                        .orElseThrow(() -> new RuntimeException("not found"));
         notification.markAsRead();
         notificationRepository.save(notification);
+    }
+
+    public Notification getNotification(Long notificationId){
+        return notificationRepository.findById(notificationId)
+                .orElseThrow(() -> new RuntimeException("not found"));
     }
 }

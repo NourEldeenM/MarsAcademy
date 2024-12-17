@@ -1,0 +1,51 @@
+package com.academy.mars.NotificationsManagement;
+
+import org.aspectj.weaver.ast.Not;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/v1/notifications")
+public class NotificationController {
+    @Autowired
+    NotificationService notificationService;
+
+    @GetMapping("/{userId}/all")
+    public ResponseEntity<?> getAllNotifications(@PathVariable Long userId){
+        List<Notification> notifications = notificationService.getAllNotifications(userId);
+        if (notifications != null){
+            return ResponseEntity.ok(notifications);
+        }
+        else
+            return ResponseEntity.badRequest().body("ID undefined");
+    }
+
+    @GetMapping("/{userId}/unread")
+    public ResponseEntity<?> getUnreadNotifications(@PathVariable Long userId){
+        List<Notification> notifications = notificationService.getUnreadNotifications(userId);
+        if (notifications != null){
+            return ResponseEntity.ok(notifications);
+        }
+        else
+            return ResponseEntity.badRequest().body("ID undefined");
+    }
+
+    @GetMapping("/{userId}/{notificationId}")
+    public ResponseEntity<?> getNotification(@PathVariable Long notificationId){
+        Notification notification = notificationService.getNotification(notificationId);
+        if (notification != null){
+            return ResponseEntity.ok(notification);
+        }
+        else
+            return ResponseEntity.badRequest().body("ID undefined");
+    }
+
+    @PutMapping("/{userId}/{notificationId}/markAsRead")
+    public void markAsRead(@PathVariable Long notificationId){
+        notificationService.markAsRead(notificationId);
+    }
+
+}
