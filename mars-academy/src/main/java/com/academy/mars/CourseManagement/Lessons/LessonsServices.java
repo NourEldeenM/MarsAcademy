@@ -69,4 +69,16 @@ public class LessonsServices {
         }
         lessonsRepository.delete(existingLesson.get());
     }
+
+    public void deleteAllLessonsOfCourse( Long courseId) {
+        List<Lessons> existingLessons = lessonsRepository.findByCourseId( courseId);
+
+        if(existingLessons.isEmpty()){
+            throw new RuntimeException("There is no Lessons in course with id "+courseId);
+        }
+        for(Lessons l:existingLessons){
+            deleteLesson(courseId,l.getId());
+        }
+
+    }
 }

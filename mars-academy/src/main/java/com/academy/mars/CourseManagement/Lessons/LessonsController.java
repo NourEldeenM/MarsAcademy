@@ -84,6 +84,20 @@ public class LessonsController {
 
     }
 
+    //delete all lessons of a course
+    @DeleteMapping
+    public ResponseEntity<?> deleteAllLessonsOfCourse(@PathVariable Long courseId) {
+        try {
+            lessonsServices.deleteAllLessonsOfCourse(courseId );
+            return ResponseEntity.status(200).body(json("message", "lessons deleted Successfully"));
+
+        } catch (RuntimeException ex) {
+            return ResponseEntity.status(400).body(json("Error", ex.getMessage().toString()));
+
+        }
+
+    }
+
     private ObjectNode json(String key, String value) {
         // Create an ObjectMapper instance
         ObjectMapper objectMapper = new ObjectMapper();
