@@ -17,4 +17,7 @@ public interface CourseEnrollmentsRepository extends JpaRepository<CourseEnrollm
 
     @Query("SELECT CASE WHEN COUNT(ce) > 0 THEN TRUE ELSE FALSE END FROM CourseEnrollments ce WHERE ce.user = :user AND ce.course = :course")
     boolean isStudentEnrolledInCourse(User user, Courses course);
+
+    @Query("SELECT ce FROM CourseEnrollments ce WHERE ce.user = :user AND ce.course = :course")
+    CourseEnrollments findByUserAndCourse(User user, Courses course);
 }

@@ -44,7 +44,13 @@ public class CourseEnrollmentsController {
 
     @DeleteMapping("/{studentId}")
     public ResponseEntity<?> studentUnenrollInACourse(@PathVariable  Long courseId,@PathVariable Long studentId) {
-        return ResponseEntity.status(200).body(json("Message","student "+ studentId +" un enroll in course "+courseId));
+        try {
+            courseEnrollmentsServices.unEnrollStudentInCourse(courseId,studentId);
+
+            return ResponseEntity.status(200).body(json("Message","student "+ studentId +" is not enrolled in course "+courseId));
+        }catch (Exception e){
+            return ResponseEntity.status(400).body(json("Error",e.getMessage()));
+        }
     }
 
 

@@ -30,37 +30,52 @@ public class CourseEnrollmentsServices {
         Optional<User> userOptional = userRepository.findById(studentId);
         Optional<Courses> courseOptional = coursesRepository.findById(courseId);
         if(userOptional.isEmpty()){
-            throw new RuntimeException("Student not found");
+            throw new RuntimeException("Student with ID " + studentId + " not found");
         }
         if(courseOptional.isEmpty()){
-            throw new RuntimeException("Course not found");
+            throw new RuntimeException("Course with ID " + courseId + " not found");
         }
 
-        Courses course=courseOptional.get();
-        User user=userOptional.get();
+        Courses course = courseOptional.get();
+        User user = userOptional.get();
 
-//        edge case
-        if(courseEnrollmentsRepository.isStudentEnrolledInCourse(user,course)){
-            throw new RuntimeException("Student already enrolled in course.");
+        // Edge case
+        if(courseEnrollmentsRepository.isStudentEnrolledInCourse(user, course)){
+            throw new RuntimeException("Student with ID " + studentId + " is already enrolled in course with ID " + courseId);
         }
-
-
 
         CourseEnrollments enrollment = new CourseEnrollments(user, course);
         courseEnrollmentsRepository.save(enrollment);
     }
 
-//    public void studentUnEnrollInCourse(Long course_id,Long studentId){
-//
-//    }
+    public void unEnrollStudentInCourse(Long courseId, Long studentId){
+        Optional<User> userOptional = userRepository.findById(studentId);
+        Optional<Courses> courseOptional = coursesRepository.findById(courseId);
+        if(userOptional.isEmpty()){
+            throw new RuntimeException("Student with ID " + studentId + " not found");
+        }
+        if(courseOptional.isEmpty()){
+            throw new RuntimeException("Course with ID " + courseId + " not found");
+        }
+
+        Courses course = courseOptional.get();
+        User user = userOptional.get();
+        if(!courseEnrollmentsRepository.isStudentEnrolledInCourse(user, course)){
+            throw new RuntimeException("Student with ID " + studentId + " is not enrolled in the course with ID " + courseId);
+        }
+        CourseEnrollments courseEnrollment = courseEnrollmentsRepository.findByUserAndCourse(user, course);
+        courseEnrollmentsRepository.delete(courseEnrollment);
+    }
+
     public List<User> getAllStudentsInCourse(Long courseId){
         Optional<Courses> courseOptional = coursesRepository.findById(courseId);
         if(courseOptional.isEmpty()){
-            throw new RuntimeException("Course not found");
+            throw new RuntimeException("Course with ID " + courseId + " not found");
         }
 
-        Courses course=courseOptional.get();
-        List<User> students= courseEnrollmentsRepository.findAllStudentsInACourse(course);
+        Courses course = courseOptional.get();
+        List<User> students = courseEnrollmentsRepository.findAllStudentsInACourse(course);
+       //make program continue untill authentication
         for (User student : students) {
             if (student.getUserRole() == null) {
                 student.setUserRole(UserRole.User); // Assign a default role
@@ -68,9 +83,17 @@ public class CourseEnrollmentsServices {
         }
         return students;
     }
-//
-//    public List<Courses> findAllCoursesStudentEnrollIn(Long course_id,Long studentId){
-//
-//    }
 
+    //return all courses of student
+    //need to get api and call it
+     public List<Courses> findAllCoursesStudentEnrollIn(Long courseId, Long studentId){
+         Optional<User> userOptional = userRepository.findById(studentId);
+         if(userOptional.isEmpty()){
+             throw new RuntimeException("Student with ID " + studentId + " not found");
+         }
+         User user = userOptional.get();
+
+         List<Courses> courses=courseEnrollmentsRepository.findAllCoursesOfAStudent(user);
+         return courses;
+     }
 }

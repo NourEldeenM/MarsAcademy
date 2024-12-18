@@ -1,13 +1,12 @@
 package com.academy.mars.CourseManagement.Courses;
 
+import com.academy.mars.CourseManagement.CourseEnrollments.CourseEnrollments;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "courses")
@@ -21,6 +20,9 @@ public class Courses {
     private String description;
     private String category;
     private Integer duration;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<CourseEnrollments> enrollments = new ArrayList<>();
 
     public Courses(String name) {
         this.name = name;
