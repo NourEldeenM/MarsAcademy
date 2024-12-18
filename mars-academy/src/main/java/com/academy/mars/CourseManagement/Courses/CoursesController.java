@@ -101,7 +101,7 @@ public class CoursesController {
                 return ResponseEntity.status(404).body(json("Error", "Course not found"));
             }
             coursesServices.deleteCourse(id);
-            return ResponseEntity.status(200).body(json("Error", "Course with this id '" + id + "' has been deleted successfully."));
+            return ResponseEntity.status(200).body(json("Message", "Course with this id '" + id + "' has been deleted successfully."));
         } catch (Exception ex) {
             return ResponseEntity.status(400).body(json("Error", ex.getMessage()));
         }
