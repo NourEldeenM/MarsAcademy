@@ -1,6 +1,7 @@
 package com.academy.mars.CourseManagement.Courses;
 
 import com.academy.mars.CourseManagement.CourseEnrollments.CourseEnrollments;
+import com.academy.mars.CourseManagement.Lessons.Lessons;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -23,6 +24,9 @@ public class Courses {
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<CourseEnrollments> enrollments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Lessons> lessons = new ArrayList<>();
 
     public Courses(String name) {
         this.name = name;
