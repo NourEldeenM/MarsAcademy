@@ -2,8 +2,8 @@ package com.academy.mars.CourseManagement.CourseEnrollments;
 
 import com.academy.mars.CourseManagement.Courses.Courses;
 import com.academy.mars.CourseManagement.Courses.CoursesRepository;
-import com.academy.mars.UserManagement.User;
-import com.academy.mars.UserManagement.UserRepository;
+import com.academy.mars.entity.User;
+import com.academy.mars.repository.UserRepository;
 import com.academy.mars.entity.UserRole;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,8 +77,8 @@ public class CourseEnrollmentsServices {
         List<User> students = courseEnrollmentsRepository.findAllStudentsInACourse(course);
        //make program continue untill authentication
         for (User student : students) {
-            if (student.getUserRole() == null) {
-                student.setUserRole(UserRole.User); // Assign a default role
+            if (student.getRole() == null) {
+                student.setRole(UserRole.ROLE_STUDENT); // Assign a default role
             }
         }
         return students;

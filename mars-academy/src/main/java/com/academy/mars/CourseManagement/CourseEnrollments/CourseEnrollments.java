@@ -1,7 +1,7 @@
 package com.academy.mars.CourseManagement.CourseEnrollments;
 
 import com.academy.mars.CourseManagement.Courses.Courses;
-import com.academy.mars.UserManagement.User;
+import com.academy.mars.entity.User;
 import jakarta.persistence.*;
 
 @Entity

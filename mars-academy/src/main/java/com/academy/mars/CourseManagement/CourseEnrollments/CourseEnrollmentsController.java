@@ -1,6 +1,6 @@
 package com.academy.mars.CourseManagement.CourseEnrollments;
 
-import com.academy.mars.UserManagement.User;
+import com.academy.mars.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.http.ResponseEntity;
