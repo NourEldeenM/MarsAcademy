@@ -88,17 +88,9 @@ import java.util.Collections;
 public class User implements UserDetails {
 
     @Id
-    @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
-            allocationSize = 1
-
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
-    )
-    private Long id;
+    @Column(name = "id", updatable = false, nullable = false, unique = true, length = 36)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String username;
     private String email;
     private String password;
@@ -114,7 +106,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(userRole.name());
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + userRole.name());
         return Collections.singletonList(authority);
     }
 
@@ -125,7 +117,7 @@ public class User implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return id;
     }
 }
 
