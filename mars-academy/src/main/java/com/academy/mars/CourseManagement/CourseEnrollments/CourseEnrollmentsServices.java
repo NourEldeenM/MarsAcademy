@@ -4,7 +4,7 @@ import com.academy.mars.CourseManagement.Courses.Courses;
 import com.academy.mars.CourseManagement.Courses.CoursesRepository;
 import com.academy.mars.UserManagement.User;
 import com.academy.mars.UserManagement.UserRepository;
-import com.academy.mars.UserManagement.UserRole;
+import com.academy.mars.entity.UserRole;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
