@@ -44,8 +44,25 @@ public class NotificationController {
     }
 
     @PutMapping("/{userId}/{notificationId}/markAsRead")
-    public void markAsRead(@PathVariable Long notificationId){
-        notificationService.markAsRead(notificationId);
+    public ResponseEntity<String> markAsRead(@PathVariable Long notificationId){
+        try {
+            notificationService.markAsRead(notificationId);
+            return ResponseEntity.ok("marked read");
+        }
+        catch (RuntimeException exception){
+            return ResponseEntity.badRequest().body("notification not found");
+        }
+    }
+
+    @DeleteMapping("/{userId}/{notificationId}/deleteNotification")
+    public ResponseEntity<String> deleteNotification(@PathVariable Long notificationId){
+        try {
+            notificationService.deleteNotification(notificationId);
+            return ResponseEntity.ok("deleted successfully");
+        }
+        catch (RuntimeException exception){
+            return ResponseEntity.badRequest().body("notification not found");
+        }
     }
 
 }

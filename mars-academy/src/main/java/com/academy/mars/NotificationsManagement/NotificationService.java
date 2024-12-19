@@ -30,6 +30,12 @@ public class NotificationService {
         notificationRepository.save(notification);
     }
 
+    public void deleteNotification(Long notificationId){
+        Notification notification = notificationRepository.findById(notificationId)
+                        .orElseThrow(() -> new RuntimeException("not found"));
+        notificationRepository.delete(notification);
+    }
+
     public Notification getNotification(Long notificationId){
         return notificationRepository.findById(notificationId)
                 .orElseThrow(() -> new RuntimeException("not found"));
