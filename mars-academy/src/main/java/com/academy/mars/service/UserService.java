@@ -48,8 +48,8 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public User getUserById(Long userId) {
-        return userRepository.findById(userId.intValue())
+    public User getUserById(String userId) {
+        return userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format(USER_NOT_FOUND_MSG, userId)));
     }
@@ -59,7 +59,7 @@ public class UserService implements UserDetailsService {
     }
 
     public User updateUser(Long userId, User updatedUser) {
-        User existingUser = userRepository.findById(userId.intValue())
+        User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format(USER_NOT_FOUND_MSG, userId)));
         existingUser.setId(updatedUser.getId());
