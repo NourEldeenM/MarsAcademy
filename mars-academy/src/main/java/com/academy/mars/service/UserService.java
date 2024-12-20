@@ -24,7 +24,7 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    public org.springframework.security.core.userdetails.User loadUserByUsername(String id) throws UsernameNotFoundException {
+    public org.springframework.security.core.userdetails.User loadUserByUsername(Long id) throws UsernameNotFoundException {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id));
         return new org.springframework.security.core.userdetails.User(
@@ -34,7 +34,7 @@ public class UserService implements UserDetailsService {
         );
     }
 
-    public void deleteUser(String userId) {
+    public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, userId)));
         userRepository.delete(user);
@@ -48,14 +48,15 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public User getUserById(String userId) {
+    public User getUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format(USER_NOT_FOUND_MSG, userId)));
     }
 
     public User createUser(User user) {
-        return userRepository.save(user);
+        userRepository.save(user);
+        return user;
     }
 
     public User updateUser(Long userId, User updatedUser) {
@@ -68,5 +69,10 @@ public class UserService implements UserDetailsService {
         existingUser.setRole(updatedUser.getRole());
 
         return userRepository.save(existingUser);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return null;
     }
 }

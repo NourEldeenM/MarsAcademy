@@ -1,6 +1,7 @@
 package com.academy.mars.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,13 +22,16 @@ import java.util.Collections;
 public class User implements UserDetails {
 
     @Id
-    @Column(name = "id", updatable = false, nullable = false, unique = true, length = 36)
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Use IDENTITY for Long id generation
+    private Long id;  // Keep the id as Long
+    @NotNull(message = "username can't be null")
     private String username;
+    @NotNull(message = "email can't be null")
     private String email;
+    @NotNull(message = "password can't be null")
     private String password;
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "role can't be null")
     private UserRole role;
 
     public User(String username, String email, String password, UserRole userRole) {
@@ -48,9 +52,10 @@ public class User implements UserDetails {
         return password;
     }
 
-
     @Override
     public String getUsername() {
         return username;
     }
+
+
 }

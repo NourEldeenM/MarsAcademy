@@ -1,9 +1,10 @@
-package com.academy.mars.UserManagement;
+package com.academy.mars.controller;
 
 import com.academy.mars.entity.User;
 import com.academy.mars.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
+
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
         try {
@@ -30,8 +32,9 @@ public class UserController {
             return ResponseEntity.status(400).body(json("Error", e.getMessage()));
         }
     }
+
     @GetMapping("/{userId}")
-    public ResponseEntity<?> getUserById(@PathVariable String userId) {
+    public ResponseEntity<?> getUserById(@PathVariable Long userId) {
         try {
             User user = userService.getUserById(userId);
             return ResponseEntity.status(200).body(user);
@@ -39,8 +42,9 @@ public class UserController {
             return ResponseEntity.status(404).body(json("Error", e.getMessage()));
         }
     }
+
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    public ResponseEntity<?> createUser(@RequestBody @Valid User user) {
         try {
             User createdUser = userService.createUser(user);
             return ResponseEntity.status(201).body(createdUser);
@@ -48,6 +52,7 @@ public class UserController {
             return ResponseEntity.status(400).body(json("Error", e.getMessage()));
         }
     }
+
     @PutMapping("/{userId}")
     public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User user) {
         try {
@@ -57,8 +62,9 @@ public class UserController {
             return ResponseEntity.status(400).body(json("Error", e.getMessage()));
         }
     }
+
     @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteUser(@PathVariable String userId) {
+    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
         try {
             userService.deleteUser(userId);
             return ResponseEntity.status(200).body(json("Message", "User deleted successfully"));
