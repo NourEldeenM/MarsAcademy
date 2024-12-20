@@ -1,6 +1,6 @@
 package com.academy.mars.CourseManagement.Lessons;
 
-import com.academy.mars.entity.courses.Courses;
+import com.academy.mars.entity.Courses;
 import jakarta.persistence.*;
 
 @Entity

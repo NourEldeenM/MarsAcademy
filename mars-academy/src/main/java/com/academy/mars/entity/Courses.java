@@ -1,4 +1,4 @@
-package com.academy.mars.entity.courses;
+package com.academy.mars.entity;
 
 import com.academy.mars.CourseManagement.CourseEnrollments.CourseEnrollments;
 import com.academy.mars.CourseManagement.Lessons.Lessons;
