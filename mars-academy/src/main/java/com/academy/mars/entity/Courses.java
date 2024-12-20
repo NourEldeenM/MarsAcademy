@@ -1,6 +1,5 @@
 package com.academy.mars.entity;
 
-import com.academy.mars.CourseManagement.CourseEnrollments.CourseEnrollments;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;

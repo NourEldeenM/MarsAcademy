@@ -1,7 +1,9 @@
-package com.academy.mars.CourseManagement.CourseEnrollments;
+package com.academy.mars.service;
 
+import com.academy.mars.entity.CourseEnrollments;
 import com.academy.mars.entity.User;
 import com.academy.mars.entity.Courses;
+import com.academy.mars.repository.CourseEnrollmentsRepository;
 import com.academy.mars.repository.UserRepository;
 import com.academy.mars.entity.UserRole;
 import com.academy.mars.repository.CoursesRepository;
