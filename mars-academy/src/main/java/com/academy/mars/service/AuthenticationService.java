@@ -23,7 +23,7 @@ public class AuthenticationService {
 
     public Map<String, Object> registerNewUser(@RequestBody User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new BadRequestException("A user with email" + user.getEmail() + " already exist");
+            throw new BadRequestException("A user with email " + user.getEmail() + " already exist");
         }
         User newUser = new User();
         newUser.setEmail(user.getEmail());
