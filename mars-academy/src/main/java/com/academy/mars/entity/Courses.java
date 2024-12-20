@@ -1,13 +1,20 @@
 package com.academy.mars.entity;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
 @Table(name = "courses")
 public class Courses {
     @Id
@@ -21,79 +28,16 @@ public class Courses {
     private Integer duration;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
     private List<CourseEnrollments> enrollments = new ArrayList<>();
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
     private List<Lessons> lessons = new ArrayList<>();
 
-    public Courses(String name) {
-        this.name = name;
-    }
-
-    @JsonCreator
-    public Courses(@JsonProperty("name") String name,
-                   @JsonProperty("title") String title,
-                   @JsonProperty("description") String description,
-                   @JsonProperty("category") String category,
-                   @JsonProperty("duration") Integer duration) {
-        this.name = name;
-        this.title = title;
-        this.description = description;
-        this.category = category;
-        this.duration = duration;
-    }
-
-    public Courses() {
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
+    @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @JsonIgnore
+    private List<CourseInstructors> instructors = new ArrayList<>();
     @Override
     public String toString() {
         return "Courses{" +
