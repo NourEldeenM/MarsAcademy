@@ -1,7 +1,7 @@
 package com.academy.mars.CourseManagement.CourseEnrollments;
 
-import com.academy.mars.CourseManagement.Courses.Courses;
 import com.academy.mars.entity.User;
+import com.academy.mars.entity.courses.Courses;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
