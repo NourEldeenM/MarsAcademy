@@ -1,5 +1,6 @@
-package com.academy.mars.CourseManagement.Courses;
+package com.academy.mars.repository;
 
+import com.academy.mars.entity.Courses;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

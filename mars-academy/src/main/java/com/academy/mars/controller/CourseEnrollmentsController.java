@@ -1,5 +1,6 @@
-package com.academy.mars.CourseManagement.CourseEnrollments;
+package com.academy.mars.controller;
 
+import com.academy.mars.service.CourseEnrollmentsServices;
 import com.academy.mars.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;

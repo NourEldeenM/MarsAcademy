@@ -1,5 +1,6 @@
-package com.academy.mars.CourseManagement.Lessons;
+package com.academy.mars.repository;
 
+import com.academy.mars.entity.Lessons;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;

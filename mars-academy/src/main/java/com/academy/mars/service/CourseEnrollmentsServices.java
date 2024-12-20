@@ -1,10 +1,12 @@
-package com.academy.mars.CourseManagement.CourseEnrollments;
+package com.academy.mars.service;
 
-import com.academy.mars.CourseManagement.Courses.Courses;
-import com.academy.mars.CourseManagement.Courses.CoursesRepository;
+import com.academy.mars.entity.CourseEnrollments;
 import com.academy.mars.entity.User;
+import com.academy.mars.entity.Courses;
+import com.academy.mars.repository.CourseEnrollmentsRepository;
 import com.academy.mars.repository.UserRepository;
 import com.academy.mars.entity.UserRole;
+import com.academy.mars.repository.CoursesRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
