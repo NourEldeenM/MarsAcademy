@@ -1,6 +1,8 @@
-package com.academy.mars.CourseManagement.Lessons;
+package com.academy.mars.service;
 
 import com.academy.mars.entity.Courses;
+import com.academy.mars.entity.Lessons;
+import com.academy.mars.repository.LessonsRepository;
 import com.academy.mars.service.CoursesServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

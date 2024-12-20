@@ -1,4 +1,4 @@
-package com.academy.mars.CourseManagement.Lessons;
+package com.academy.mars.entity;
 
 import com.academy.mars.entity.Courses;
 import jakarta.persistence.*;

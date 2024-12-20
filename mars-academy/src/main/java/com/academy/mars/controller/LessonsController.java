@@ -1,5 +1,7 @@
-package com.academy.mars.CourseManagement.Lessons;
+package com.academy.mars.controller;
 
+import com.academy.mars.service.LessonsServices;
+import com.academy.mars.entity.Lessons;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
