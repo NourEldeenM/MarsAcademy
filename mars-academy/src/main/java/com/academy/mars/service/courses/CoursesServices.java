@@ -1,5 +1,7 @@
-package com.academy.mars.CourseManagement.Courses;
+package com.academy.mars.service.courses;
 
+import com.academy.mars.entity.courses.Courses;
+import com.academy.mars.repository.courses.CoursesRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

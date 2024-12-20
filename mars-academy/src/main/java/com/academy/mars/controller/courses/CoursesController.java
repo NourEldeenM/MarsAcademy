@@ -1,5 +1,7 @@
-package com.academy.mars.CourseManagement.Courses;
+package com.academy.mars.controller.courses;
 
+import com.academy.mars.entity.courses.Courses;
+import com.academy.mars.service.courses.CoursesServices;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ public class CoursesController {
             @RequestParam(required = false) String category
 
     ) {
+        System.out.println("get courses");
         try {
             if (name == null && title == null && category == null) {
                 return ResponseEntity.ok(coursesServices.getCourses());
