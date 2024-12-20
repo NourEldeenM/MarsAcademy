@@ -1,31 +1,36 @@
-//package com.academy.mars.entity;
-//
-//import com.academy.mars.CourseManagement.Courses.Courses;
-//import com.academy.mars.NotificationsManagement.Notification;
-//import jakarta.persistence.*;
-//import lombok.EqualsAndHashCode;
-//import lombok.Getter;
-//import lombok.NoArgsConstructor;
-//import lombok.Setter;
-//
-//import java.util.List;
-//
-//@Getter
-//@Setter
+package com.academy.mars.entity;
+
+import com.academy.mars.NotificationsManagement.Notification;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.List;
+
+
 //@EqualsAndHashCode(callSuper = true)
-//@NoArgsConstructor
-//@Entity
-//@Table(name = "students")
-//public class Student extends User {
-//
-//    @ManyToMany
-//    @JoinTable(
-//            name = "student_courses",
-//            joinColumns = @JoinColumn(name = "student_id"),
-//            inverseJoinColumns = @JoinColumn(name = "course_id")
-//    )
-//    private List<Courses> enrolledCourses;
-//
-//    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Notification> notifications;
-//}
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Entity
+@Table(name = "students")
+public class Student {
+
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToMany
+    @JoinTable(
+            name = "student_notifications",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "notification_id"),
+            indexes = @Index(columnList = "student_id")
+
+    )
+    private List<Notification> notifications;
+}

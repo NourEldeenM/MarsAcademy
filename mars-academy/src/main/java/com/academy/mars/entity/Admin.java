@@ -1,4 +1,4 @@
-package com.academy.mars.entity;
-
-public class Admin {
-}
+//package com.academy.mars.entity;
+//
+//public class Admin {
+//}

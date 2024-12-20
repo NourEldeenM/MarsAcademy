@@ -18,8 +18,10 @@ import java.util.Map;
 @AllArgsConstructor
 public class AuthenticationService {
     private final UserRepository userRepository;
+    private final StudentService studentService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
     private final JwtUtils jwtService = new JwtUtils();
+    private final InstructorService instructorService;
 
     public Map<String, Object> registerNewUser(@RequestBody User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -31,6 +33,12 @@ public class AuthenticationService {
         newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         newUser.setUsername(user.getUsername());
         userRepository.save(newUser);
+        if (newUser.getRole().name().equals("ROLE_STUDENT")) {
+            studentService.registerStudent(newUser);
+        }
+        else if (newUser.getRole().name().equals("ROLE_INSTRUCTOR")) {
+            instructorService.registerInstructor(newUser);
+        }
         Map<String, Object> response = new HashMap<>();
         response.put("user", convertToDto(newUser));
         return response;

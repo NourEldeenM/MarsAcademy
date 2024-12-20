@@ -1,5 +1,6 @@
 package com.academy.mars.entity;
 
+import com.academy.mars.NotificationsManagement.Notification;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Getter
 @Setter
