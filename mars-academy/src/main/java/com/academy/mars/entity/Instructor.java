@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,18 +12,16 @@ import lombok.Setter;
 @Table(name = "instructors")
 public class Instructor {
 
+    @Id
+    private Long id; // Use this to map to User's ID
+
     @Enumerated(EnumType.STRING)
     @Column(name = "specialization", nullable = false)
     private InstructorSpecialization specialization;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @OneToOne
+    @MapsId // Maps the ID of this entity to the ID of the related User entity
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-
-    // should add table of instructor's current courses
 }
