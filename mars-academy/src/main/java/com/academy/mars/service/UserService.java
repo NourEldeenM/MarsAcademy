@@ -1,5 +1,8 @@
 package com.academy.mars.service;
 
+import com.academy.mars.entity.Instructor;
+import com.academy.mars.entity.InstructorSpecialization;
+import com.academy.mars.repository.InstructorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,9 +22,11 @@ public class UserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MSG = "User with ID %s not found";
     private final UserRepository userRepository;
+    private final InstructorRepository instructorRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, InstructorRepository instructorRepository) {
         this.userRepository = userRepository;
+        this.instructorRepository = instructorRepository;
     }
 
     public org.springframework.security.core.userdetails.User loadUserByUsername(Long id) throws UsernameNotFoundException {
@@ -55,7 +60,21 @@ public class UserService implements UserDetailsService {
     }
 
     public User createUser(User user) {
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        switch (savedUser.getRole()){
+            case ROLE_STUDENT:
+                break;
+            case ROLE_ADMIN:
+                break;
+            case ROLE_INSTRUCTOR:
+                Instructor instructor = new Instructor();
+                instructor.setUser(savedUser);
+                //other remaining instructor fields
+                instructor.setSpecialization(InstructorSpecialization.CS);
+                instructorRepository.save(instructor);
+                break;
+        }
         return user;
     }
 
