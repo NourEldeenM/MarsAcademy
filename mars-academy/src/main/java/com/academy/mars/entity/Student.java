@@ -16,13 +16,13 @@ import java.util.List;
 @Table(name = "students")
 public class Student {
 
+    @Id
+    private Long id;
+
     @OneToOne
+    @MapsId
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @OneToMany
     @JoinTable(
