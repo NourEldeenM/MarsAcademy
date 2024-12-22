@@ -1,10 +1,13 @@
 package com.academy.mars.entity;
 
-import com.academy.mars.entity.User;
 import com.academy.mars.entity.Courses;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
 @Table(name = "course_enrollments")
 public class CourseEnrollments {
 
@@ -12,8 +15,8 @@ public class CourseEnrollments {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    private User user;
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
 
     @ManyToOne
     @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false)
@@ -22,41 +25,17 @@ public class CourseEnrollments {
     // Constructors
     public CourseEnrollments() {}
 
-    public CourseEnrollments(User user, Courses course) {
-        this.user = user;
+    public CourseEnrollments(Student student, Courses course) {
+        this.student = student;
         this.course = course;
     }
 
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Courses getCourse() {
-        return course;
-    }
-
-    public void setCourse(Courses course) {
-        this.course = course;
-    }
 
     @Override
     public String toString() {
         return "CourseEnrollments{" +
                 "id=" + id +
-                ", user=" + user.getUsername() +
+                ", student=" + student.getUser().getUsername() +
                 ", course=" + course.getName() +
                 '}';
     }
