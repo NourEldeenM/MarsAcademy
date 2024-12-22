@@ -1,5 +1,6 @@
 package com.academy.mars.config;
 
+import com.academy.mars.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -32,11 +33,11 @@ public class JwtUtils {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(User userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateToken(Map<String, Object> extraClaims, User userDetails) {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
@@ -49,10 +50,12 @@ public class JwtUtils {
         return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
-    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
+    private String buildToken(Map<String, Object> extraClaims, User userDetails, long expiration) {
+        extraClaims.put("username", userDetails.getUsername());
+        extraClaims.put("email", userDetails.getEmail());
         return Jwts.builder()
                 .claims(extraClaims)
-                .subject(userDetails.getUsername())
+                .subject(String.valueOf(userDetails.getId()))
                 .claim("role",
                         userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList())
                 .issuedAt(new Date())
