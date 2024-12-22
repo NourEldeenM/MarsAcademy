@@ -5,11 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.Random;
 
 @Entity
 @Setter
