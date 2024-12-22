@@ -25,9 +25,9 @@ public class CourseInstructors {
 
     @ManyToOne
     @JoinColumn(name = "instructor_id", nullable = false)
-    private User instructor;
+    private Instructor instructor;
 
-    public CourseInstructors(Courses course, User instructor) {
+    public CourseInstructors(Courses course, Instructor instructor) {
         this.course = course;
         this.instructor = instructor;
     }
@@ -37,7 +37,7 @@ public class CourseInstructors {
         return "CourseInstructors{" +
                 "id=" + id +
                 ", course=" + (course != null ? course.getName() : null) +
-                ", instructor=" + (instructor != null ? instructor.getUsername() : null) +
+                ", instructor=" + (instructor != null ? instructor.getUser().getUsername() : null) +
                 '}';
     }
 }

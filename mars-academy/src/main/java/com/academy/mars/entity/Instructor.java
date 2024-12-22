@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 
 @Getter
 @Setter
@@ -21,9 +22,11 @@ public class Instructor {
     private InstructorSpecialization specialization;
 
     @OneToOne
-    @MapsId
+    @MapsId // Maps the ID of this entity to the ID of the related User entity
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    // should add table of instructor's current courses
+    @OneToMany(mappedBy = "instructor",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<CourseInstructors> courses;
+
 }

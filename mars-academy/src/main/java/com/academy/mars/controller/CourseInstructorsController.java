@@ -1,7 +1,7 @@
 package com.academy.mars.controller;
 
-import com.academy.mars.entity.User;
 import com.academy.mars.entity.CourseInstructors;
+import com.academy.mars.entity.Instructor;
 import com.academy.mars.service.CourseInstructorsServices;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,7 +27,7 @@ public class CourseInstructorsController {
             }
 
             // Extracting instructor details from courseInstructors
-            List<User> instructors = courseInstructors.stream()
+            List<Instructor> instructors = courseInstructors.stream()
                     .map(CourseInstructors::getInstructor)
                     .toList();
 

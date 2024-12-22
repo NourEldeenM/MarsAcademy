@@ -1,5 +1,9 @@
 package com.academy.mars.service;
 
+import com.academy.mars.entity.*;
+import com.academy.mars.repository.AdminRepository;
+import com.academy.mars.repository.InstructorRepository;
+import com.academy.mars.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -8,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.academy.mars.entity.User;
 import com.academy.mars.repository.UserRepository;
 
 import java.util.List;
@@ -19,9 +22,15 @@ public class UserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND_MSG = "User with ID %s not found";
     private final UserRepository userRepository;
+    private final InstructorRepository instructorRepository;
+    private final StudentRepository studentRepository;
+    private final AdminRepository adminRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, InstructorRepository instructorRepository, StudentRepository studentRepository, AdminRepository adminRepository) {
         this.userRepository = userRepository;
+        this.instructorRepository = instructorRepository;
+        this.studentRepository = studentRepository;
+        this.adminRepository = adminRepository;
     }
 
     public org.springframework.security.core.userdetails.User loadUserByUsername(Long id) throws UsernameNotFoundException {
@@ -37,6 +46,18 @@ public class UserService implements UserDetailsService {
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, userId)));
+        //delete explicitly
+        switch (user.getRole()){
+            case ROLE_STUDENT:
+                studentRepository.delete(studentRepository.findById(user.getId()).get());
+                break;
+            case ROLE_ADMIN:
+                adminRepository.delete(adminRepository.findById(user.getId()).get());
+                break;
+            case ROLE_INSTRUCTOR:
+                instructorRepository.delete(instructorRepository.findById(user.getId()).get());
+                break;
+        }
         userRepository.delete(user);
     }
 
@@ -55,7 +76,27 @@ public class UserService implements UserDetailsService {
     }
 
     public User createUser(User user) {
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        switch (savedUser.getRole()){
+            case ROLE_STUDENT:
+                Student student= new Student();
+                student.setUser(savedUser);
+                studentRepository.save(student);
+                break;
+            case ROLE_ADMIN:
+                Admin admin= new Admin();
+                admin.setUser(savedUser);
+                adminRepository.save(admin);
+                break;
+            case ROLE_INSTRUCTOR:
+                Instructor instructor = new Instructor();
+                instructor.setUser(savedUser);
+                //other remaining instructor fields
+                instructor.setSpecialization(InstructorSpecialization.CS);
+                instructorRepository.save(instructor);
+                break;
+        }
         return user;
     }
 

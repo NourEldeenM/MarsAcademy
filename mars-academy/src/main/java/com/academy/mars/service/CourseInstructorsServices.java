@@ -2,10 +2,11 @@ package com.academy.mars.service;
 
 import com.academy.mars.entity.CourseInstructors;
 import com.academy.mars.entity.Courses;
-import com.academy.mars.entity.User;
+import com.academy.mars.entity.Instructor;
 import com.academy.mars.repository.CourseInstructorsRepository;
 import com.academy.mars.repository.CoursesRepository;
-import com.academy.mars.repository.UserRepository;
+import com.academy.mars.repository.InstructorRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,19 +17,19 @@ public class CourseInstructorsServices {
 
     private final CourseInstructorsRepository courseInstructorsRepository;
 
-    private final UserRepository userRepository;
+    private final InstructorRepository instructorRepository;
     private final CoursesRepository coursesRepository;
+
     @Autowired
-    public CourseInstructorsServices(CourseInstructorsRepository courseInstructorsRepository, UserRepository userRepository, CoursesRepository coursesRepository) {
+    public CourseInstructorsServices(CourseInstructorsRepository courseInstructorsRepository, InstructorRepository instructorRepository, CoursesRepository coursesRepository) {
         this.courseInstructorsRepository = courseInstructorsRepository;
-        this.userRepository = userRepository;
+        this.instructorRepository = instructorRepository;
         this.coursesRepository = coursesRepository;
     }
 
-
-
+    @Transactional
     public CourseInstructors addInstructorToCourse(Long courseId, Long instructorId) {
-        Optional<User> userOptional = userRepository.findById(instructorId);
+        Optional<Instructor> userOptional = instructorRepository.findById(instructorId);
         Optional<Courses> courseOptional = coursesRepository.findById(courseId);
         if(userOptional.isEmpty()){
             throw new RuntimeException("Instructor with ID " + instructorId + " not found");
@@ -38,7 +39,7 @@ public class CourseInstructorsServices {
         }
 
         Courses course = courseOptional.get();
-        User instructor = userOptional.get();
+        Instructor instructor = userOptional.get();
 
         CourseInstructors courseInstructors = new CourseInstructors(course, instructor);
         return courseInstructorsRepository.save(courseInstructors);
@@ -56,16 +57,17 @@ public class CourseInstructorsServices {
     }
 
     public List<CourseInstructors> getCoursesByInstructor(Long instructorId) {
-        Optional<User> userOptional = userRepository.findById(instructorId);
+        Optional<Instructor> userOptional = instructorRepository.findById(instructorId);
         if(userOptional.isEmpty()){
             throw new RuntimeException("Instructor with ID " + instructorId + " not found");
         }
-        User instructor = userOptional.get();
+        Instructor instructor = userOptional.get();
         return courseInstructorsRepository.findByInstructor(instructor);
     }
 
+    @Transactional
     public void removeInstructorFromCourse(Long courseId, Long instructorId) {
-        Optional<User> userOptional = userRepository.findById(instructorId);
+        Optional<Instructor> userOptional = instructorRepository.findById(instructorId);
         Optional<Courses> courseOptional = coursesRepository.findById(courseId);
         if(userOptional.isEmpty()){
             throw new RuntimeException("Instructor with ID " + instructorId + " not found");
@@ -75,11 +77,12 @@ public class CourseInstructorsServices {
         }
 
         Courses course = courseOptional.get();
-        User instructor = userOptional.get();
+        Instructor instructor = userOptional.get();
 
         courseInstructorsRepository.deleteByCourseAndInstructor(course, instructor);
     }
 
+    @Transactional
     public void removeAllInstructorsFromCourse(Long courseId) {
         Optional<Courses> courseOptional = coursesRepository.findById(courseId);
         if(courseOptional.isEmpty()){
@@ -92,7 +95,7 @@ public class CourseInstructorsServices {
 
     // Find a specific course-instructor relationship
     public boolean isACourseInstructor(Long courseId, Long instructorId) {
-        Optional<User> userOptional = userRepository.findById(instructorId);
+        Optional<Instructor> userOptional = instructorRepository.findById(instructorId);
         Optional<Courses> courseOptional = coursesRepository.findById(courseId);
         if(userOptional.isEmpty()){
             throw new RuntimeException("Instructor with ID " + instructorId + " not found");
@@ -102,7 +105,7 @@ public class CourseInstructorsServices {
         }
 
         Courses course = courseOptional.get();
-        User instructor = userOptional.get();
+        Instructor instructor = userOptional.get();
 
         return courseInstructorsRepository.findByCourseAndInstructor(course, instructor).isPresent();
     }
