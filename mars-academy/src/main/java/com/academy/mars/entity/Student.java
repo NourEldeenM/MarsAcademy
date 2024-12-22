@@ -18,10 +18,10 @@ import java.util.List;
 public class Student {
 
     @Id
-    private Long id; // Use this to map to User's ID
+    private Long id;
 
     @OneToOne
-    @MapsId // Maps the ID of this entity to the ID of the related User entity
+    @MapsId
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
