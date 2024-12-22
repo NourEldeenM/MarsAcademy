@@ -36,7 +36,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{userId}") // anyone can go to students profile
+    @GetMapping("/{userId}") // anyone can go to student's profile
     public ResponseEntity<?> getUserById(@PathVariable Long userId) {
         try {
             User user = userService.getUserById(userId);
@@ -46,7 +46,7 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')") // admin can create users, otherwise sign up
+    @PreAuthorize("hasAnyRole('ADMIN')") // admins can create users, otherwise sign up!
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody @Valid User user) {
         try {
@@ -57,7 +57,7 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('STUDENT')") // no one can update his profile except the student himself
+    // anyone can update his profile
     @PutMapping("/{userId}")
     public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User user) {
         try {
