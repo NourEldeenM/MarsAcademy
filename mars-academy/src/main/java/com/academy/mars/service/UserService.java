@@ -46,6 +46,18 @@ public class UserService implements UserDetailsService {
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, userId)));
+        //delete explicitly
+        switch (user.getRole()){
+            case ROLE_STUDENT:
+                studentRepository.delete(studentRepository.findById(user.getId()).get());
+                break;
+            case ROLE_ADMIN:
+                adminRepository.delete(adminRepository.findById(user.getId()).get());
+                break;
+            case ROLE_INSTRUCTOR:
+                instructorRepository.delete(instructorRepository.findById(user.getId()).get());
+                break;
+        }
         userRepository.delete(user);
     }
 
