@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,5 +25,8 @@ public class Instructor {
     @MapsId // Maps the ID of this entity to the ID of the related User entity
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "instructor",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<CourseInstructors> courses;
 
 }
