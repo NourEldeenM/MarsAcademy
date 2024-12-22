@@ -1,8 +1,9 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.Instructor;
-import com.academy.mars.entity.InstructorSpecialization;
+import com.academy.mars.entity.*;
+import com.academy.mars.repository.AdminRepository;
 import com.academy.mars.repository.InstructorRepository;
+import com.academy.mars.repository.StudentRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.academy.mars.entity.User;
 import com.academy.mars.repository.UserRepository;
 
 import java.util.List;
@@ -23,10 +23,14 @@ public class UserService implements UserDetailsService {
     private final static String USER_NOT_FOUND_MSG = "User with ID %s not found";
     private final UserRepository userRepository;
     private final InstructorRepository instructorRepository;
+    private final StudentRepository studentRepository;
+    private final AdminRepository adminRepository;
 
-    public UserService(UserRepository userRepository, InstructorRepository instructorRepository) {
+    public UserService(UserRepository userRepository, InstructorRepository instructorRepository, StudentRepository studentRepository, AdminRepository adminRepository) {
         this.userRepository = userRepository;
         this.instructorRepository = instructorRepository;
+        this.studentRepository = studentRepository;
+        this.adminRepository = adminRepository;
     }
 
     public org.springframework.security.core.userdetails.User loadUserByUsername(Long id) throws UsernameNotFoundException {
@@ -64,8 +68,14 @@ public class UserService implements UserDetailsService {
 
         switch (savedUser.getRole()){
             case ROLE_STUDENT:
+                Student student= new Student();
+                student.setUser(savedUser);
+                studentRepository.save(student);
                 break;
             case ROLE_ADMIN:
+                Admin admin= new Admin();
+                admin.setUser(savedUser);
+                adminRepository.save(admin);
                 break;
             case ROLE_INSTRUCTOR:
                 Instructor instructor = new Instructor();
