@@ -2,8 +2,14 @@ package com.academy.mars.entity;
 
 import com.academy.mars.entity.Courses;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Setter
+@Getter
+@NoArgsConstructor
 public class Lessons {
 
     @Id
@@ -19,63 +25,14 @@ public class Lessons {
     @JoinColumn(name = "course_id", referencedColumnName = "id")
     private Courses course;
 
-    // Constructors, getters, and setters
-
-    public Lessons() {}
+    @OneToOne(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
+    private LessonsOtp lessonOtp;
 
     public Lessons(String title, String description, String content, int duration, Courses course) {
         this.title = title;
         this.description = description;
         this.content = content;
         this.duration = duration;
-        this.course = course;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getDuration() {
-        return duration;
-    }
-
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
-
-    public Courses getCourse() {
-        return course;
-    }
-
-    public void setCourse(Courses course) {
         this.course = course;
     }
 }

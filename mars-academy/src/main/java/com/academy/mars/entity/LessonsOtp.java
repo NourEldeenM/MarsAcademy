@@ -5,11 +5,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
-import java.util.Objects;
-import java.util.Random;
 
 @Entity
 @Setter
@@ -22,7 +18,7 @@ public class LessonsOtp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonIgnore
     @JoinColumn(name = "lesson_id", referencedColumnName = "id")
     private Lessons lesson;
