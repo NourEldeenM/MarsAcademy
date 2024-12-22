@@ -26,27 +26,31 @@ public class AuthenticationService {
 
     public Map<String, Object> registerNewUser(@RequestBody User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
-            throw new BadRequestException("A user with email " + user.getEmail() + " already exist");
+            throw new BadRequestException("A user with email " + user.getEmail() + " already exists");
         }
+
         User newUser = new User();
         newUser.setEmail(user.getEmail());
         newUser.setRole(user.getRole());
         newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         newUser.setUsername(user.getUsername());
-        if (newUser.getRole().name().equals("ROLE_STUDENT")) {
-            studentService.registerStudent(newUser);
-        } else if (newUser.getRole().name().equals("ROLE_INSTRUCTOR")) {
-            instructorService.registerInstructor(newUser);
-        } else if (newUser.getRole().name().equals("ROLE_ADMIN")) {
-            adminService.registerAdmin(newUser);
-        } else {
-            throw new BadRequestException("Invalid role provided");
+
+        switch (newUser.getRole().name()) {
+            case "ROLE_STUDENT" -> studentService.registerStudent(newUser);
+            case "ROLE_INSTRUCTOR" -> instructorService.registerInstructor(newUser);
+            case "ROLE_ADMIN" -> adminService.registerAdmin(newUser);
+            default -> throw new BadRequestException("Invalid role provided");
         }
+
         userRepository.save(newUser);
+        Long userId = newUser.getId(); // get the auto-generated ID
         Map<String, Object> response = new HashMap<>();
         response.put("user", convertToDto(newUser));
+        response.put("id", userId);
+
         return response;
     }
+
 
     public Map<String, Object> login(@RequestBody User user) {
         User foundUser = userRepository.findByEmail(user.getEmail()).orElse(null);

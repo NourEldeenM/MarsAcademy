@@ -2,10 +2,10 @@ package com.academy.mars.config;
 
 import com.academy.mars.entity.User;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -24,12 +24,16 @@ public class JwtUtils {
     //    @Value("${security.jwt.expiration-time}")
     private final long jwtExpiration = 36000000;
 
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+    public String extractUserID(String token) {
+        try {
+            return extractClaim(token, Claims::getSubject);
+        } catch (JwtException e) {
+            throw new JwtException("Token extraction failed: " + e.getMessage());
+        }
     }
 
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
+        Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
@@ -46,8 +50,8 @@ public class JwtUtils {
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        final String userId = extractClaim(token, Claims::getSubject);
+        return userId.equals(String.valueOf(((User) userDetails).getId())) && !isTokenExpired(token);
     }
 
     private String buildToken(Map<String, Object> extraClaims, User userDetails, long expiration) {
@@ -77,11 +81,15 @@ public class JwtUtils {
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts.parser()
-                .verifyWith(getSignInKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
+        try {
+            return Jwts.parser()
+                    .setSigningKey(getSignInKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            throw new JwtException("Invalid token: " + e.getMessage());
+        }
     }
 
     private SecretKey getSignInKey() {

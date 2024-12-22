@@ -31,18 +31,20 @@ public class SecurityConfig {
 //                        .requestMatchers("/admin/**").hasRole("ADMIN")
 //                        .requestMatchers("/instructor/**").hasRole("INSTRUCTOR")
 //                        .requestMatchers("/student/**").hasRole("STUDENT")
-                                .requestMatchers("/api/v1/admin/**").permitAll()
+                                .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/api/v1/instructor/**").permitAll()
                                 .requestMatchers("/api/v1/student/**").permitAll()
                                 .requestMatchers("/api/v1/**").permitAll()
                                 .requestMatchers("/swagger-ui.html").permitAll()
                                 .anyRequest().authenticated()
                 ).sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .exceptionHandling(
-                        e -> e.authenticationEntryPoint(
-                                (request, response, exception) -> response.setStatus(HttpServletResponse.SC_BAD_REQUEST)
-                        )
-                )
+                .exceptionHandling(e -> e.authenticationEntryPoint(
+                        (request, response, exception) -> {
+                            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"" + exception.getMessage() + "\"}");
+                        }
+                ))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
