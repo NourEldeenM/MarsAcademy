@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ public class UserController {
         this.userService = userService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')") // viewing all app users are only limited to admins
     @GetMapping
     public ResponseEntity<?> getAllUsers() {
         try {
@@ -33,7 +36,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/{userId}") // anyone can go to students profile
     public ResponseEntity<?> getUserById(@PathVariable Long userId) {
         try {
             User user = userService.getUserById(userId);
@@ -43,6 +46,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')") // admin can create users, otherwise sign up
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody @Valid User user) {
         try {
@@ -53,6 +57,7 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('STUDENT')") // no one can update his profile except the student himself
     @PutMapping("/{userId}")
     public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User user) {
         try {
@@ -63,6 +68,7 @@ public class UserController {
         }
     }
 
+    // anyone can delete his own account
     @DeleteMapping("/{userId}")
     public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
         try {
