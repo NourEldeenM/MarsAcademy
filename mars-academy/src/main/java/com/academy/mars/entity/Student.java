@@ -16,13 +16,13 @@ import java.util.List;
 @Table(name = "students")
 public class Student {
 
+    @Id
+    private Long id; // Use this to map to User's ID
+
     @OneToOne
+    @MapsId // Maps the ID of this entity to the ID of the related User entity
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @OneToMany
     @JoinTable(
