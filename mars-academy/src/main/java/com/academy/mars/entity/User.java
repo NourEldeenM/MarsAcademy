@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Getter
@@ -41,7 +42,18 @@ public class User implements UserDetails {
         this.email = email;
         this.password = password;
         this.role = userRole;
+        notifications = new LinkedList<>();
     }
+
+    @OneToMany
+    @JoinTable(
+            name = "user_notifications",
+            joinColumns = @JoinColumn(name = "student_id"),
+            inverseJoinColumns = @JoinColumn(name = "notification_id"),
+            indexes = @Index(columnList = "student_id")
+
+    )
+    private List<Notification> notifications;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -59,5 +71,7 @@ public class User implements UserDetails {
         return username;
     }
 
-
+    public void addNotification(Notification notification) {
+        notifications.add(notification);
+    }
 }

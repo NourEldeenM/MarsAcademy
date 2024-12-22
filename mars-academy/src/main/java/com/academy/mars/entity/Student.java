@@ -24,13 +24,4 @@ public class Student {
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @OneToMany
-    @JoinTable(
-            name = "student_notifications",
-            joinColumns = @JoinColumn(name = "student_id"),
-            inverseJoinColumns = @JoinColumn(name = "notification_id"),
-            indexes = @Index(columnList = "student_id")
-
-    )
-    private List<Notification> notifications;
 }

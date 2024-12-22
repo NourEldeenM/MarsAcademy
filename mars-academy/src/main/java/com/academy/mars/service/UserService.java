@@ -1,12 +1,10 @@
 package com.academy.mars.service;
 
+import com.academy.mars.NotificationsManagement.Notification;
 import com.academy.mars.entity.*;
 import com.academy.mars.repository.AdminRepository;
 import com.academy.mars.repository.InstructorRepository;
 import com.academy.mars.repository.StudentRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -31,16 +29,6 @@ public class UserService implements UserDetailsService {
         this.instructorRepository = instructorRepository;
         this.studentRepository = studentRepository;
         this.adminRepository = adminRepository;
-    }
-
-    public org.springframework.security.core.userdetails.User loadUserByUsername(Long id) throws UsernameNotFoundException {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id));
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                user.getRole().getAuthorities()
-        );
     }
 
     public void deleteUser(Long userId) {
@@ -112,8 +100,13 @@ public class UserService implements UserDetailsService {
         return userRepository.save(existingUser);
     }
 
+    public void addNotification(User user, Notification notification) {
+        user.addNotification(notification);
+    }
+
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        return userRepository.findById(Long.parseLong(id)) // Assuming `id` is a Long
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id));
     }
 }
