@@ -22,7 +22,7 @@ public class LessonsOtp {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonIgnore
     @JoinColumn(name = "lesson_id", referencedColumnName = "id")
     private Lessons lesson;
