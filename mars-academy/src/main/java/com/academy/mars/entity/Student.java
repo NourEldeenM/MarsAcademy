@@ -26,13 +26,7 @@ public class Student {
     private User user;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-@JsonIgnore
+    @JsonIgnore
     private List<CourseEnrollments> enrollments;
-
-
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-@JsonIgnore
-    private List<CourseEnrollments> enrollments;
-
 
 }
