@@ -22,6 +22,7 @@ public class AuthenticationService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
     private final JwtUtils jwtService = new JwtUtils();
     private final InstructorService instructorService;
+    private final AdminService adminService;
 
     public Map<String, Object> registerNewUser(@RequestBody User user) {
         if (userRepository.findByEmail(user.getEmail()).isPresent()) {
@@ -32,13 +33,16 @@ public class AuthenticationService {
         newUser.setRole(user.getRole());
         newUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         newUser.setUsername(user.getUsername());
-        userRepository.save(newUser);
         if (newUser.getRole().name().equals("ROLE_STUDENT")) {
             studentService.registerStudent(newUser);
-        }
-        else if (newUser.getRole().name().equals("ROLE_INSTRUCTOR")) {
+        } else if (newUser.getRole().name().equals("ROLE_INSTRUCTOR")) {
             instructorService.registerInstructor(newUser);
+        } else if (newUser.getRole().name().equals("ROLE_ADMIN")) {
+            adminService.registerAdmin(newUser);
+        } else {
+            throw new BadRequestException("Invalid role provided");
         }
+        userRepository.save(newUser);
         Map<String, Object> response = new HashMap<>();
         response.put("user", convertToDto(newUser));
         return response;

@@ -15,7 +15,7 @@ import java.util.List;
 public class Instructor {
 
     @Id
-    private Long id; // Use this to map to User's ID
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "specialization", nullable = false)
