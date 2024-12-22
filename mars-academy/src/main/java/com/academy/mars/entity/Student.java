@@ -1,6 +1,7 @@
 package com.academy.mars.entity;
 
 import com.academy.mars.NotificationsManagement.Notification;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,5 +24,15 @@ public class Student {
     @MapsId
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+@JsonIgnore
+    private List<CourseEnrollments> enrollments;
+
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+@JsonIgnore
+    private List<CourseEnrollments> enrollments;
+
 
 }

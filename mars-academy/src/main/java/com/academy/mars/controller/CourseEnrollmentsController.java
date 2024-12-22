@@ -1,7 +1,7 @@
 package com.academy.mars.controller;
 
+import com.academy.mars.entity.Student;
 import com.academy.mars.service.CourseEnrollmentsServices;
-import com.academy.mars.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +21,7 @@ public class CourseEnrollmentsController {
     @GetMapping
     public ResponseEntity<?> getStudentsEnrollInACourse(@PathVariable  Long courseId) {
         try {
-            List<User> students=courseEnrollmentsServices.getAllStudentsInCourse(courseId);
+            List<Student> students=courseEnrollmentsServices.getAllStudentsInCourse(courseId);
             if(students.isEmpty()){
                 return ResponseEntity.status(200).body(json("Messge","This course doesn't have any students"));
 
