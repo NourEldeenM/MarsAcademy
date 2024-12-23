@@ -1,6 +1,5 @@
 package com.academy.mars.entity;
 
-import com.academy.mars.NotificationsManagement.Notification;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.EqualsAndHashCode;

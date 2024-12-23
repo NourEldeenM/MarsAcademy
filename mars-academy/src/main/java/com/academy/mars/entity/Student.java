@@ -1,6 +1,5 @@
 package com.academy.mars.entity;
 
-import com.academy.mars.NotificationsManagement.Notification;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;

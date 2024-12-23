@@ -14,11 +14,13 @@ public class AssignmentSubmission {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String fileLink;
+
+
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
-    private String filePath;
     private LocalDateTime submissionTime;
 
     @ManyToOne

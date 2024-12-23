@@ -47,13 +47,13 @@ class AssignmentSubmissionRepositoryTest {
         submission1.setStudent(student);
         submission1.setCourse(course1);
         submission1.setAssignment(assignment);
-        submission1.setFilePath("path1");
+        submission1.setFileLink("path1");
         submission1.setSubmissionTime(LocalDateTime.now());
         submission2 = new AssignmentSubmission();
         submission2.setStudent(student);
         submission2.setCourse(course1);
         submission2.setAssignment(assignment);
-        submission2.setFilePath("path2");
+        submission2.setFileLink("path2");
         submission2.setSubmissionTime(LocalDateTime.now());
     }
 
@@ -62,7 +62,7 @@ class AssignmentSubmissionRepositoryTest {
         when(assignmentSubmissionRepository.findByStudentId(student.getId())).thenReturn(List.of(submission1, submission2));
         List<AssignmentSubmission> submissions = assignmentSubmissionRepository.findByStudentId(student.getId());
         assertThat(submissions).hasSize(2);
-        assertThat(submissions).extracting(AssignmentSubmission::getFilePath).containsExactlyInAnyOrder("path1", "path2");
+        assertThat(submissions).extracting(AssignmentSubmission::getFileLink).containsExactlyInAnyOrder("path1", "path2");
         verify(assignmentSubmissionRepository, times(1)).findByStudentId(student.getId());
     }
 
@@ -71,7 +71,7 @@ class AssignmentSubmissionRepositoryTest {
         when(assignmentSubmissionRepository.findByStudentIdAndCourseId(student.getId(), course1.getId())).thenReturn(List.of(submission1));
         List<AssignmentSubmission> submissions = assignmentSubmissionRepository.findByStudentIdAndCourseId(student.getId(), course1.getId());
         assertThat(submissions).hasSize(1);
-        assertThat(submissions.getFirst().getFilePath()).isEqualTo("path1");
+        assertThat(submissions.getFirst().getFileLink()).isEqualTo("path1");
         verify(assignmentSubmissionRepository, times(1)).findByStudentIdAndCourseId(student.getId(), course1.getId());
     }
 }

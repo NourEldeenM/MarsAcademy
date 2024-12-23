@@ -1,4 +1,4 @@
-package com.academy.mars.NotificationsManagement;
+package com.academy.mars.entity;
 
 public enum NotificationType {
     ENROLLMENT_CONFIRMATION,

@@ -1,5 +1,6 @@
-package com.academy.mars.NotificationsManagement;
+package com.academy.mars.repository;
 
+import com.academy.mars.entity.Notification;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
