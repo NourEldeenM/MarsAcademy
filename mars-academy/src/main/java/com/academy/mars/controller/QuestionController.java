@@ -31,8 +31,6 @@ public class QuestionController {
     @Autowired
     private QuestionRepository questionRepository;
 
-    @Autowired
-    private QuizService quizService;
 
     @Autowired
     private QuestionService questionService;

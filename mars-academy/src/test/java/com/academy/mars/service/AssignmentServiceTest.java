@@ -2,7 +2,7 @@ package com.academy.mars.service;
 
 import com.academy.mars.entity.Assignment;
 import com.academy.mars.repository.AssignmentRepository;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -32,8 +32,8 @@ class AssignmentServiceTest {
         assignment = new Assignment();
         assignment.setId(1L);
         assignment.setTitle("Test Assignment");
+        assignment.setDueDate(LocalDate.parse("2024-12-30"));
         assignment.setDescription("Test Description");
-        assignment.setDueDate(LocalDate.parse("2024-12-31"));
     }
 
     @Test

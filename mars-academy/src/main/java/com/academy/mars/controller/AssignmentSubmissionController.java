@@ -44,7 +44,7 @@ public class AssignmentSubmissionController {
 
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR', 'STUDENT')")    // instructors and students can get submissions
-    @GetMapping("/submissions")
+    @GetMapping("/{assignmentId}/submissions")
     public ResponseEntity<List<AssignmentSubmission>> getSubmissionsByStudentAndCourse(
             @RequestParam Long studentId, @PathVariable Long courseId) {
         List<AssignmentSubmission> submissions = submissionService.getSubmissionsByStudentAndCourse(studentId, courseId);
