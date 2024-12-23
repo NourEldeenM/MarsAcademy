@@ -13,6 +13,7 @@ import com.academy.mars.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -36,6 +37,7 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can create questions
     @PostMapping("/quiz/{quizId}")
     public ResponseEntity<Question> createQuestionForQuiz(
             @PathVariable long courseId,
@@ -50,6 +52,7 @@ public class QuestionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedQuestion);
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can create questions
     @PostMapping("/assignment/{assignmentId}")
     public ResponseEntity<Question> createQuestionForAssignment(
             @PathVariable long courseId,
@@ -64,6 +67,7 @@ public class QuestionController {
         return ResponseEntity.status(HttpStatus.CREATED).body(savedQuestion);
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can get all questions for quiz / assessment
     @GetMapping
     public List<Question> getAllQuestions(
             @PathVariable long courseId,
@@ -78,6 +82,7 @@ public class QuestionController {
         return questionService.getQuestionsByBank(questionBankId);
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can edit questions
     @PatchMapping("/{questionId}")
     public String updateQuestion(@PathVariable long courseId, @PathVariable long questionBankId,
                                  @PathVariable long questionId, @RequestBody Question question) {
@@ -85,6 +90,7 @@ public class QuestionController {
         return "Question updated successfully!";
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can delete questions
     @DeleteMapping("/{questionId}")
     public String deleteQuestion(@PathVariable long courseId, @PathVariable long questionBankId,
                                  @PathVariable long questionId) {

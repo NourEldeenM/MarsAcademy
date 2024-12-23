@@ -41,11 +41,4 @@ public class AssignmentService {
         assignmentRepository.delete(assignment);
         return true;
     }
-
-//    public void gradeAssignment(long courseId, Long assignmentId, Assignment assignment) {
-//        Assignment oldAssignment = assignmentRepository.findByCourseIdAndId(courseId, assignmentId)
-//                .orElseThrow(() -> new RuntimeException("assignment not found"));
-//        oldAssignment.setGrade(assignment.getGrade());
-//        assignmentRepository.save(oldAssignment);
-//    }
 }

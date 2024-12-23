@@ -6,6 +6,7 @@ import com.academy.mars.service.CoursesServices;
 import com.academy.mars.service.GradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class GradeController {
     @Autowired
     private CoursesServices coursesServices;
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can grade courses
     @PostMapping({"/{courseId}/students/{studentId}/instructors/{instructorId}/grades"})
     public ResponseEntity<String> gradeStudent(@PathVariable long courseId,
                                                @PathVariable long studentId,
@@ -40,6 +42,7 @@ public class GradeController {
         return ResponseEntity.ok("Grade assigned successfully!");
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can grade assessments
     @PostMapping({"/{courseId}/quizzes/{quizId}/grades", "/{courseId}/assignments/{assignmentId}/grades"})
     public ResponseEntity<String> submitGrade(@PathVariable long courseId,
                                               @PathVariable(required = false) Long quizId,
@@ -63,6 +66,7 @@ public class GradeController {
         return ResponseEntity.ok("Grade submitted successfully!");
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'STUDENT')")    // students and instructors can see feedback
     @GetMapping("/{courseId}/assignments/{assignmentId}/feedback")
     public ResponseEntity<String> getFeedbackForAssignment(@PathVariable long courseId,
                                                            @PathVariable long assignmentId,
@@ -74,6 +78,7 @@ public class GradeController {
         return ResponseEntity.status(404).body("Feedback not found.");
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can write feedback
     @PostMapping("/{courseId}/assignments/{assignmentId}/feedback")
     public ResponseEntity<String> provideManualFeedback(@PathVariable long courseId,
                                                         @PathVariable long assignmentId,
@@ -89,6 +94,7 @@ public class GradeController {
         return ResponseEntity.ok("Manual feedback provided successfully!");
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can edit feedback
     @PatchMapping("/{courseId}/assignments/{assignmentId}/feedback")
     public ResponseEntity<String> updateAssignmentFeedback(@PathVariable long courseId,
                                                            @PathVariable long assignmentId,
@@ -98,11 +104,13 @@ public class GradeController {
         return ResponseEntity.ok("Feedback updated successfully!");
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can see all course grades
     @GetMapping("/{courseId}/grades")
     public List<Grade> getGradesForCourse(@PathVariable long courseId) {
         return gradeService.getGradesByCourseId(courseId);
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'STUDENT')")    // instructors and students can see assessments' grades
     @GetMapping({"/{courseId}/quizzes/{quizId}/grades", "/{courseId}/assignments/{assignmentId}/grades"})
     public ResponseEntity<Grade> getGradeByType(@PathVariable long courseId,
                                                 @PathVariable(required = false) Long quizId,
@@ -118,6 +126,7 @@ public class GradeController {
         return grade.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can edit grades
     @PatchMapping({"/{courseId}/quizzes/{quizId}/grades", "/{courseId}/assignments/{assignmentId}/grades"})
     public ResponseEntity<String> updateGrade(@PathVariable long courseId,
                                               @PathVariable(required = false) Long quizId,
@@ -146,6 +155,7 @@ public class GradeController {
         return ResponseEntity.ok("Grade updated successfully!");
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can edit grades
     @DeleteMapping({"/{courseId}/quizzes/{quizId}/grades", "/{courseId}/assignments/{assignmentId}/grades"})
     public ResponseEntity<String> deleteGrade(@PathVariable long courseId,
                                               @PathVariable(required = false) Long quizId,

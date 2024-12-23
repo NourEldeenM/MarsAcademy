@@ -6,6 +6,7 @@ import com.academy.mars.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class QuizController {
     @Autowired
     private QuizService quizService;
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can create quizzes
     @PostMapping
     public String createQuiz(@PathVariable long courseId, @RequestBody Quiz quiz) {
         quiz.setCourseId(courseId);
@@ -25,12 +27,14 @@ public class QuizController {
         return "Quiz created successfully!";
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can create quizzes (random questions)
     @PostMapping("/{quizId}/randomize")
     public String randomizeQuizQuestions(@PathVariable long courseId, @PathVariable long quizId, @RequestParam int questionCount) {
         quizService.randomizeQuizQuestions(courseId, quizId, questionCount);
         return "Quiz questions randomized successfully!";
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can see quizzes (random questions)
     @GetMapping("/{quizId}/random")
     public List<Question> getRandomQuestions(
             @PathVariable long courseId,
@@ -39,17 +43,19 @@ public class QuizController {
         return quizService.getRandomQuestionsFromBank(courseId, quizId, questionCount);
     }
 
-
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can see all quizzes
     @GetMapping
     public List<Quiz> getAllQuizzes(@PathVariable long courseId) {
         return quizService.getAllQuizzes(courseId);
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR', 'STUDENT')")    // instructors and students can access a quiz
     @GetMapping("/{quizId}")
     public Optional<Quiz> getQuizById(@PathVariable long courseId, @PathVariable long quizId) {
         return quizService.getQuizById(courseId, quizId);
     }
 
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can edit a quiz
     @PatchMapping("/{quizId}")
     public ResponseEntity<String> updateQuiz(
             @PathVariable long courseId,
@@ -65,7 +71,7 @@ public class QuizController {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Quiz not found for the given course and quiz ID.");
     }
 
-
+    @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can delete a quiz
     @DeleteMapping("/{quizId}")
     public String deleteQuiz(@PathVariable long courseId, @PathVariable long quizId) {
         boolean isDeleted = quizService.deleteQuiz(courseId, quizId);
