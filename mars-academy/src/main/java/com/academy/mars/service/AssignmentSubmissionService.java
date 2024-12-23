@@ -1,7 +1,10 @@
 package com.academy.mars.service;
 
 
-import com.academy.mars.entity.*;
+import com.academy.mars.entity.Assignment;
+import com.academy.mars.entity.AssignmentSubmission;
+import com.academy.mars.entity.Courses;
+import com.academy.mars.entity.Student;
 import com.academy.mars.repository.AssignmentRepository;
 import com.academy.mars.repository.AssignmentSubmissionRepository;
 import com.academy.mars.repository.CoursesRepository;

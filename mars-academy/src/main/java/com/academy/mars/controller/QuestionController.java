@@ -9,7 +9,6 @@ import com.academy.mars.repository.AssignmentRepository;
 import com.academy.mars.repository.QuestionRepository;
 import com.academy.mars.repository.QuizRepository;
 import com.academy.mars.service.QuestionService;
-import com.academy.mars.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
