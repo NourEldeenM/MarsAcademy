@@ -6,10 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/courses")
@@ -23,6 +22,7 @@ public class CoursesController {
 
 
     //get all courses
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
     @GetMapping
     public ResponseEntity<?> getCourses(
             @RequestParam(required = false) String name,
@@ -52,6 +52,7 @@ public class CoursesController {
     }
 
     //add new course
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     @PostMapping
     public ResponseEntity<?> addCourse(@RequestBody Courses course) {
 
@@ -64,6 +65,7 @@ public class CoursesController {
     }
 
     // Update an existing course
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     @PutMapping
     public ResponseEntity<?> updateCourse(@RequestBody Courses updatedCourse) {
         // Validate the course name or other required fields
@@ -81,6 +83,7 @@ public class CoursesController {
 
 
     // Delete a course by name
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     @DeleteMapping
     public ResponseEntity<?> deleteCourse(@RequestParam Long id) {
         try {
