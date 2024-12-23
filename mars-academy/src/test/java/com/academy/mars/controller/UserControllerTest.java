@@ -1,4 +1,4 @@
-package com.academy.mars.repository;
+package com.academy.mars.controller;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UserRepositoryTest {
+class UserControllerTest {
 
     @BeforeEach
     void setUp() {
@@ -17,14 +17,22 @@ class UserRepositoryTest {
     }
 
     @Test
-    void deleteInBatch() {
+    void getAllUsers() {
     }
 
     @Test
-    void findByEmail() {
+    void getUserById() {
     }
 
     @Test
-    void findById() {
+    void createUser() {
+    }
+
+    @Test
+    void updateUser() {
+    }
+
+    @Test
+    void deleteUser() {
     }
 }

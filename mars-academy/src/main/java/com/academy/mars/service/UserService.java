@@ -35,7 +35,7 @@ public class UserService implements UserDetailsService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, userId)));
         //delete explicitly
-        switch (user.getRole()) {
+        switch (user.getRole()){
             case ROLE_STUDENT:
                 studentRepository.delete(studentRepository.findById(user.getId()).get());
                 break;
@@ -66,14 +66,14 @@ public class UserService implements UserDetailsService {
     public User createUser(User user) {
         User savedUser = userRepository.save(user);
 
-        switch (savedUser.getRole()) {
+        switch (savedUser.getRole()){
             case ROLE_STUDENT:
-                Student student = new Student();
+                Student student= new Student();
                 student.setUser(savedUser);
                 studentRepository.save(student);
                 break;
             case ROLE_ADMIN:
-                Admin admin = new Admin();
+                Admin admin= new Admin();
                 admin.setUser(savedUser);
                 adminRepository.save(admin);
                 break;
