@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Setter
 @Getter
@@ -28,6 +30,9 @@ public class Lessons {
     @OneToOne(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
     private LessonsOtp lessonOtp;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "lesson_id")
+    private List<LessonsFiles> files;
     public Lessons(String title, String description, String content, int duration, Courses course) {
         this.title = title;
         this.description = description;
