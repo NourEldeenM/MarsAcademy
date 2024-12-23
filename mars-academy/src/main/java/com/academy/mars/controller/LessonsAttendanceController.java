@@ -8,6 +8,7 @@ import com.academy.mars.service.LessonsAttendanceServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class LessonsAttendanceController {
 
     // POST API to add attendance for a student in a lesson
     @PostMapping("/student/{studentId}")
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
     public ResponseEntity<?> addAttendance(@PathVariable Long studentId,@RequestParam String otp) {
         try {
             return ResponseEntity.status(200).body(lessonsAttendanceServices.addAttendance(studentId,otp));
@@ -40,6 +42,7 @@ public class LessonsAttendanceController {
 
     // GET API to get the attendance records for a specific lesson
     @GetMapping("/lesson/{lessonId}")
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     public ResponseEntity<List<Student>> getStudentsByLesson(@PathVariable Long lessonId) {
         Lessons lesson = new Lessons();
         lesson.setId(lessonId);
@@ -51,6 +54,7 @@ public class LessonsAttendanceController {
 
     // GET API to get the attendance records for a specific student
     @GetMapping("/student/{studentId}")
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
     public ResponseEntity<List<Lessons>> getLessonsByStudent(@PathVariable Long studentId) {
         Student student = new Student();
         student.setId(studentId);
