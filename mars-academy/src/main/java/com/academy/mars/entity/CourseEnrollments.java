@@ -1,6 +1,7 @@
 package com.academy.mars.entity;
 
 import com.academy.mars.entity.Courses;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class CourseEnrollments {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "student_id", nullable = false)
     private Student student;
 
