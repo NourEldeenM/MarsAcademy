@@ -1,5 +1,8 @@
-package com.academy.mars.NotificationsManagement;
+package com.academy.mars.service;
 
+import com.academy.mars.entity.NotificationType;
+import com.academy.mars.entity.Notification;
+import com.academy.mars.repository.NotificationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +21,7 @@ public class NotificationService {
         return notificationRepository.findByReceiverId(recipientId);
     }
 
-    public Notification createAndSendNotification(NotificationType type,String message,Long receiverId){
+    public Notification createAndSendNotification(NotificationType type, String message, Long receiverId){
         Notification notification = new Notification(type,message,receiverId);
         return notificationRepository.save(notification);
     }

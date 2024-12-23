@@ -1,6 +1,7 @@
-package com.academy.mars.NotificationsManagement;
+package com.academy.mars.controller;
 
-import org.aspectj.weaver.ast.Not;
+import com.academy.mars.service.NotificationService;
+import com.academy.mars.entity.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
