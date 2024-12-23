@@ -1,6 +1,6 @@
 package com.academy.mars.service;
 
-import com.academy.mars.NotificationsManagement.Notification;
+import com.academy.mars.entity.Notification;
 import com.academy.mars.entity.*;
 import com.academy.mars.repository.AdminRepository;
 import com.academy.mars.repository.InstructorRepository;
