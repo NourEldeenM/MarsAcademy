@@ -16,7 +16,9 @@ public class AssignmentSubmission {
 
     @ManyToOne
     @JoinColumn(name = "student_id", nullable = false)
-    private Student student;     private String filePath;
+    private Student student;
+
+    private String filePath;
     private LocalDateTime submissionTime;
 
     @ManyToOne
