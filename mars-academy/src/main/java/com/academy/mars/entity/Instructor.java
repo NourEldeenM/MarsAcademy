@@ -1,5 +1,6 @@
 package com.academy.mars.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class Instructor {
     private User user;
 
     @OneToMany(mappedBy = "instructor",cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
     private List<CourseInstructors> courses;
 
 }

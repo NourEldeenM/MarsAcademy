@@ -23,11 +23,11 @@ public class LessonsServices {
     }
 
     public Lessons addLesson(Long courseId, Lessons lesson) {
-        Optional<Courses> course = coursesServices.getCourseById(courseId);
-        if (course .isEmpty()) {
+        if (!coursesServices.courseExist(courseId)) {
             throw new RuntimeException("There is no Course id with id "+courseId);
         }
-        lesson.setCourse(course.get());
+        Courses course = coursesServices.getCourseById(courseId);
+        lesson.setCourse(course);
         return lessonsRepository.save(lesson);
     }
 

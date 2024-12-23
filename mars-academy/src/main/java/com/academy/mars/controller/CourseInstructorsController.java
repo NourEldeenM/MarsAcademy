@@ -4,6 +4,7 @@ import com.academy.mars.entity.CourseInstructors;
 import com.academy.mars.entity.Instructor;
 import com.academy.mars.service.CourseInstructorsServices;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class CourseInstructorsController {
         this.courseInstructorsServices = courseInstructorsServices;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
     @GetMapping
     public ResponseEntity<?> getInstructorsOfACourse(@PathVariable Long courseId) {
         try {
@@ -36,31 +38,32 @@ public class CourseInstructorsController {
             return ResponseEntity.status(400).body(json("Error", e.getMessage()));
         }
     }
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     @PostMapping("/{instructorId}")
     public ResponseEntity<?> addCourseInstructor(@PathVariable  Long courseId,@PathVariable Long instructorId) {
         try{
             courseInstructorsServices.addInstructorToCourse(courseId,instructorId);
+            return ResponseEntity.status(201).body(json("Message","instructor "+ instructorId +" enroll in course "+courseId));
         }catch (Exception e){
             return ResponseEntity.status(400).body(json("Error",e.getMessage()));
         }
-        return ResponseEntity.status(201).body(json("Message","instructor "+ instructorId +" enroll in course "+courseId));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping
     public ResponseEntity<?> removeAllInstructorsFromCourse(@PathVariable  Long courseId) {
         try {
             courseInstructorsServices.removeAllInstructorsFromCourse(courseId);
-
             return ResponseEntity.status(200).body(json("Message","All instructors of course with course id "+ courseId +" is removed."));
         }catch (Exception e){
             return ResponseEntity.status(400).body(json("Error",e.getMessage()));
         }
     }
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     @DeleteMapping("/{instructorId}")
     public ResponseEntity<?> removeInstructorFromCourse(@PathVariable  Long courseId,@PathVariable Long instructorId) {
         try {
             courseInstructorsServices.removeInstructorFromCourse(courseId,instructorId);
-
             return ResponseEntity.status(200).body(json("Message","instructor "+ instructorId +" is not enrolled in course "+courseId));
         }catch (Exception e){
             return ResponseEntity.status(400).body(json("Error",e.getMessage()));

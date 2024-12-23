@@ -6,10 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/courses")
@@ -23,6 +22,7 @@ public class CoursesController {
 
 
     //get all courses
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
     @GetMapping
     public ResponseEntity<?> getCourses(
             @RequestParam(required = false) String name,
@@ -47,21 +47,12 @@ public class CoursesController {
             return ResponseEntity.badRequest()
                     .body(json("Error", "Invalid combination of filters provided."));
         } catch (Exception ex) {
-            // Create an ObjectMapper instance
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            // Create an ObjectNode (represents a JSON object)
-            ObjectNode jsonObject = objectMapper.createObjectNode();
-
-            // Add properties to the JSON object
-            jsonObject.put("Error", ex.getMessage().toString());
-
-            ResponseEntity<Object> error = ResponseEntity.internalServerError().body(json("Error", ex.getMessage()));
-            return error;
+          return ResponseEntity.internalServerError().body(json("Error", ex.getMessage()));
         }
     }
 
     //add new course
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     @PostMapping
     public ResponseEntity<?> addCourse(@RequestBody Courses course) {
 
@@ -74,6 +65,7 @@ public class CoursesController {
     }
 
     // Update an existing course
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     @PutMapping
     public ResponseEntity<?> updateCourse(@RequestBody Courses updatedCourse) {
         // Validate the course name or other required fields
@@ -82,11 +74,6 @@ public class CoursesController {
         }
 
         try {
-            Optional<Courses> existingCourse = coursesServices.getCourseById(updatedCourse.getId());
-            if (existingCourse.isEmpty()) {
-                return ResponseEntity.status(404).body(json("Error", "Course not found"));
-            }
-
             coursesServices.updateCourse(updatedCourse);
             return ResponseEntity.status(200).body(updatedCourse);
         } catch (Exception ex) {
@@ -96,11 +83,11 @@ public class CoursesController {
 
 
     // Delete a course by name
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     @DeleteMapping
     public ResponseEntity<?> deleteCourse(@RequestParam Long id) {
         try {
-            Optional<Courses> existingCourse = coursesServices.getCourseById(id);
-            if (existingCourse.isEmpty()) {
+            if (!coursesServices.courseExist(id)) {
                 return ResponseEntity.status(404).body(json("Error", "Course not found"));
             }
             coursesServices.deleteCourse(id);

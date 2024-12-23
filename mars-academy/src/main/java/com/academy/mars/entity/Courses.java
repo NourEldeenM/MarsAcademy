@@ -27,15 +27,15 @@ public class Courses {
     private String category;
     private Integer duration;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<CourseEnrollments> enrollments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Lessons> lessons = new ArrayList<>();
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<CourseInstructors> instructors = new ArrayList<>();
     @Override

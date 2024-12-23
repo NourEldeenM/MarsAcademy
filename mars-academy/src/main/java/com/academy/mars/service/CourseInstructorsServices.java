@@ -29,84 +29,56 @@ public class CourseInstructorsServices {
 
     @Transactional
     public CourseInstructors addInstructorToCourse(Long courseId, Long instructorId) {
-        Optional<Instructor> userOptional = instructorRepository.findById(instructorId);
-        Optional<Courses> courseOptional = coursesRepository.findById(courseId);
-        if(userOptional.isEmpty()){
-            throw new RuntimeException("Instructor with ID " + instructorId + " not found");
-        }
-        if(courseOptional.isEmpty()){
-            throw new RuntimeException("Course with ID " + courseId + " not found");
-        }
-
-        Courses course = courseOptional.get();
-        Instructor instructor = userOptional.get();
+        Courses course = courseExist(courseId).get();
+        Instructor instructor = instructorExist(instructorId).get();
 
         CourseInstructors courseInstructors = new CourseInstructors(course, instructor);
         return courseInstructorsRepository.save(courseInstructors);
     }
 
-    // Get all instructors for a specific course
     public List<CourseInstructors> getInstructorsByCourse(Long courseId) {
-        Optional<Courses> courseOptional = coursesRepository.findById(courseId);
-        if(courseOptional.isEmpty()){
-            throw new RuntimeException("Course with ID " + courseId + " not found");
-        }
-
-        Courses course = courseOptional.get();
+        Courses course = courseExist(courseId).get();
         return courseInstructorsRepository.findByCourse(course);
     }
 
     public List<CourseInstructors> getCoursesByInstructor(Long instructorId) {
-        Optional<Instructor> userOptional = instructorRepository.findById(instructorId);
-        if(userOptional.isEmpty()){
-            throw new RuntimeException("Instructor with ID " + instructorId + " not found");
-        }
-        Instructor instructor = userOptional.get();
+        Instructor instructor = instructorExist(instructorId).get();
         return courseInstructorsRepository.findByInstructor(instructor);
     }
 
     @Transactional
     public void removeInstructorFromCourse(Long courseId, Long instructorId) {
-        Optional<Instructor> userOptional = instructorRepository.findById(instructorId);
-        Optional<Courses> courseOptional = coursesRepository.findById(courseId);
-        if(userOptional.isEmpty()){
-            throw new RuntimeException("Instructor with ID " + instructorId + " not found");
-        }
-        if(courseOptional.isEmpty()){
-            throw new RuntimeException("Course with ID " + courseId + " not found");
-        }
-
-        Courses course = courseOptional.get();
-        Instructor instructor = userOptional.get();
-
+        Courses course = courseExist(courseId).get();
+        Instructor instructor = instructorExist(instructorId).get();
         courseInstructorsRepository.deleteByCourseAndInstructor(course, instructor);
     }
 
     @Transactional
     public void removeAllInstructorsFromCourse(Long courseId) {
-        Optional<Courses> courseOptional = coursesRepository.findById(courseId);
-        if(courseOptional.isEmpty()){
-            throw new RuntimeException("Course with ID " + courseId + " not found");
-        }
-
-        Courses course = courseOptional.get();
+        Courses course = courseExist(courseId).get();
         courseInstructorsRepository.deleteByCourse(course);
     }
 
-    // Find a specific course-instructor relationship
     public boolean isACourseInstructor(Long courseId, Long instructorId) {
-        Optional<Instructor> userOptional = instructorRepository.findById(instructorId);
-        Optional<Courses> courseOptional = coursesRepository.findById(courseId);
-        if(userOptional.isEmpty()){
-            throw new RuntimeException("Instructor with ID " + instructorId + " not found");
-        }
-        if(courseOptional.isEmpty()){
-            throw new RuntimeException("Course with ID " + courseId + " not found");
-        }
-
-        Courses course = courseOptional.get();
-        Instructor instructor = userOptional.get();
-
+        Courses course = courseExist(courseId).get();
+        Instructor instructor = instructorExist(instructorId).get();
         return courseInstructorsRepository.findByCourseAndInstructor(course, instructor).isPresent();
     }
+
+    private Optional<Courses> courseExist(Long id){
+        Optional<Courses> courseOptional = coursesRepository.findById(id);
+        if(courseOptional.isEmpty()){
+            throw new RuntimeException("Course with ID " + id + " not found");
+        }
+        return courseOptional;
+    }
+
+    private Optional<Instructor> instructorExist(Long id){
+        Optional<Instructor> userOptional = instructorRepository.findById(id);
+        if(userOptional.isEmpty()){
+            throw new RuntimeException("Instructor with ID " + id + " not found");
+        }
+        return userOptional;
+    }
+
 }

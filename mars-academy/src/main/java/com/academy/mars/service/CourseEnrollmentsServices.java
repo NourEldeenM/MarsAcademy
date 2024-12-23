@@ -2,6 +2,7 @@ package com.academy.mars.service;
 
 import com.academy.mars.entity.CourseEnrollments;
 import com.academy.mars.entity.Courses;
+import com.academy.mars.entity.Instructor;
 import com.academy.mars.entity.Student;
 import com.academy.mars.repository.CourseEnrollmentsRepository;
 import com.academy.mars.repository.CoursesRepository;
@@ -31,19 +32,9 @@ public class CourseEnrollmentsServices {
 
     @Transactional
     public void enrollStudentInCourse(Long courseId, Long studentId){
-        Optional<Student> studentOptional = studentRepository.findById(studentId);
-        Optional<Courses> courseOptional = coursesRepository.findById(courseId);
-        if(studentOptional.isEmpty()){
-            throw new RuntimeException("Student with ID " + studentId + " not found");
-        }
-        if(courseOptional.isEmpty()){
-            throw new RuntimeException("Course with ID " + courseId + " not found");
-        }
+        Courses course = courseExist(courseId).get();
+        Student student = studentExist(studentId).get();
 
-        Courses course = courseOptional.get();
-        Student student = studentOptional.get();
-
-        // Edge case
         if(courseEnrollmentsRepository.isStudentEnrolledInCourse(student, course)){
             throw new RuntimeException("Student with ID " + studentId + " is already enrolled in course with ID " + courseId);
         }
@@ -53,17 +44,9 @@ public class CourseEnrollmentsServices {
     }
 
     public void unEnrollStudentInCourse(Long courseId, Long studentId){
-        Optional<Student> studentOptional = studentRepository.findById(studentId);
-        Optional<Courses> courseOptional = coursesRepository.findById(courseId);
-        if(studentOptional.isEmpty()){
-            throw new RuntimeException("Student with ID " + studentId + " not found");
-        }
-        if(courseOptional.isEmpty()){
-            throw new RuntimeException("Course with ID " + courseId + " not found");
-        }
+        Courses course = courseExist(courseId).get();
+        Student student = studentExist(studentId).get();
 
-        Courses course = courseOptional.get();
-        Student student = studentOptional.get();
         if(!courseEnrollmentsRepository.isStudentEnrolledInCourse(student, course)){
             throw new RuntimeException("Student with ID " + studentId + " is not enrolled in the course with ID " + courseId);
         }
@@ -72,26 +55,31 @@ public class CourseEnrollmentsServices {
     }
 
     public List<Student> getAllStudentsInCourse(Long courseId){
-        Optional<Courses> courseOptional = coursesRepository.findById(courseId);
-        if(courseOptional.isEmpty()){
-            throw new RuntimeException("Course with ID " + courseId + " not found");
-        }
+        Courses course = courseExist(courseId).get();
 
-        Courses course = courseOptional.get();
         List<Student> students = courseEnrollmentsRepository.findByCourse(course);
         return students;
     }
 
-    //return all courses of student
-    //need to get api and call it
-     public List<Courses> findAllCoursesStudentEnrollIn(Long courseId, Long studentId){
-         Optional<Student> studentOptional = studentRepository.findById(studentId);
-         if(studentOptional.isEmpty()){
-             throw new RuntimeException("Student with ID " + studentId + " not found");
-         }
-         Student student = studentOptional.get();
-
+     public List<Courses> findAllCoursesStudentEnrollIn( Long studentId){
+         Student student = studentExist(studentId).get();
          List<Courses> courses=courseEnrollmentsRepository.findByStudent(student);
          return courses;
      }
+
+    private Optional<Courses> courseExist(Long id){
+        Optional<Courses> courseOptional = coursesRepository.findById(id);
+        if(courseOptional.isEmpty()){
+            throw new RuntimeException("Course with ID " + id + " not found");
+        }
+        return courseOptional;
+    }
+
+    private Optional<Student> studentExist(Long id){
+        Optional<Student> userOptional = studentRepository.findById(id);
+        if(userOptional.isEmpty()){
+            throw new RuntimeException("Student with ID " + id + " not found");
+        }
+        return userOptional;
+    }
 }

@@ -3,6 +3,7 @@ package com.academy.mars.controller;
 import com.academy.mars.entity.LessonsOtp;
 import com.academy.mars.service.LessonsOtpServices;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -19,6 +20,7 @@ public class LessonsOtpController {
 
     // POST: Create OTP for a lesson
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     public ResponseEntity<?> createOtp(@PathVariable Long lessonId) {
         try {
             LessonsOtp lessonsOtp = lessonsOtpServices.createOtpForLesson(lessonId);
@@ -30,6 +32,7 @@ public class LessonsOtpController {
 
     // GET: Get OTP for a lesson
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
     public ResponseEntity<?> getOtp(@PathVariable Long lessonId) {
         try {
             LessonsOtp lessonsOtp = lessonsOtpServices.getOtpForLesson(lessonId);
@@ -41,6 +44,7 @@ public class LessonsOtpController {
 
     // PUT: Update OTP for a lesson
     @PutMapping
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     public ResponseEntity<?> updateOtp(@PathVariable Long lessonId) {
         try {
             LessonsOtp updatedOtp = lessonsOtpServices.updateOtpForLesson(lessonId);
@@ -52,6 +56,7 @@ public class LessonsOtpController {
 
     // DELETE: Delete OTP for a lesson
     @DeleteMapping
+    @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     public ResponseEntity<?> deleteOtp(@PathVariable Long lessonId) {
         try {
             lessonsOtpServices.deleteOtpForLesson(lessonId);
@@ -61,7 +66,6 @@ public class LessonsOtpController {
         }
     }
 
-    // Helper method to format JSON response
     private Object json(String key, String message) {
         return Map.of(key, message);
     }
