@@ -1,8 +1,10 @@
 package com.academy.mars.service;
 
+import com.academy.mars.entity.CourseInstructors;
 import com.academy.mars.entity.Courses;
 import com.academy.mars.repository.CoursesRepository;
 import jakarta.transaction.Transactional;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public class CoursesServices {
     }
 
     // Get course by name (should return only one course)
-    public List<Courses> getCourseByName(String name) {
+    public List<Courses> getCourseByName(@NotNull String name) {
         List<Courses> courses = coursesRepository.findByName(name.toLowerCase());
         if (courses.isEmpty()) {
             throw new RuntimeException("there are no course with name  " + name );
@@ -30,8 +32,11 @@ public class CoursesServices {
         return courses;
     }
 
-    public Optional<Courses> getCourseById(Long id){
-        return coursesRepository.findById(id);
+    public Courses getCourseById(Long id){
+        if(!courseExist(id)){
+            throw new RuntimeException("Course Not Found");
+        }
+        return coursesRepository.findById(id).get();
     }
     @Transactional
     public void deleteCourse(Long id) {
@@ -46,19 +51,15 @@ public class CoursesServices {
 
     @Transactional
     public Courses updateCourse(Courses updatedCourse) {
-        Optional<Courses> existingCourse = coursesRepository.findById(updatedCourse.getId());
-
-        if (existingCourse.isPresent()) {
-            Courses courseToUpdate = existingCourse.get();
-
-            courseToUpdate.setName(updatedCourse.getName());
-            courseToUpdate.setTitle(updatedCourse.getTitle());
-            courseToUpdate.setDescription(updatedCourse.getDescription());
-            courseToUpdate.setCategory(updatedCourse.getCategory());
-            courseToUpdate.setDuration(updatedCourse.getDuration());
-
-            coursesRepository.save(courseToUpdate);
-            return courseToUpdate;
+        if (courseExist(updatedCourse.getId())) {
+            Courses existingCourse=coursesRepository.findById(updatedCourse.getId()).get();
+            existingCourse.setName(updatedCourse.getName());
+            existingCourse.setTitle(updatedCourse.getTitle());
+            existingCourse.setDescription(updatedCourse.getDescription());
+            existingCourse.setCategory(updatedCourse.getCategory());
+            existingCourse.setDuration(updatedCourse.getDuration());
+            coursesRepository.save(existingCourse);
+            return updatedCourse;
         }
         throw new RuntimeException("Course with ID " + updatedCourse.getId() + " not found");
     }
@@ -71,5 +72,9 @@ public class CoursesServices {
     // Get courses by title
     public List<Courses> getCoursesByTitle(String categoryTitle) {
         return coursesRepository.findByTitle(categoryTitle);
+    }
+
+    public Boolean courseExist(Long courseId){
+        return coursesRepository.findById(courseId).isPresent();
     }
 }

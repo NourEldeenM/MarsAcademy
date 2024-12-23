@@ -47,17 +47,7 @@ public class CoursesController {
             return ResponseEntity.badRequest()
                     .body(json("Error", "Invalid combination of filters provided."));
         } catch (Exception ex) {
-            // Create an ObjectMapper instance
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            // Create an ObjectNode (represents a JSON object)
-            ObjectNode jsonObject = objectMapper.createObjectNode();
-
-            // Add properties to the JSON object
-            jsonObject.put("Error", ex.getMessage().toString());
-
-            ResponseEntity<Object> error = ResponseEntity.internalServerError().body(json("Error", ex.getMessage()));
-            return error;
+          return ResponseEntity.internalServerError().body(json("Error", ex.getMessage()));
         }
     }
 
@@ -82,11 +72,6 @@ public class CoursesController {
         }
 
         try {
-            Optional<Courses> existingCourse = coursesServices.getCourseById(updatedCourse.getId());
-            if (existingCourse.isEmpty()) {
-                return ResponseEntity.status(404).body(json("Error", "Course not found"));
-            }
-
             coursesServices.updateCourse(updatedCourse);
             return ResponseEntity.status(200).body(updatedCourse);
         } catch (Exception ex) {
@@ -99,8 +84,7 @@ public class CoursesController {
     @DeleteMapping
     public ResponseEntity<?> deleteCourse(@RequestParam Long id) {
         try {
-            Optional<Courses> existingCourse = coursesServices.getCourseById(id);
-            if (existingCourse.isEmpty()) {
+            if (!coursesServices.courseExist(id)) {
                 return ResponseEntity.status(404).body(json("Error", "Course not found"));
             }
             coursesServices.deleteCourse(id);
