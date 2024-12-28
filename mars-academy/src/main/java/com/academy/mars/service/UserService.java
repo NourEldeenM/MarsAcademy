@@ -92,6 +92,7 @@ public class UserService implements UserDetailsService {
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format(USER_NOT_FOUND_MSG, userId)));
+        existingUser.setUsername(updatedUser.getUsername());
         existingUser.setId(updatedUser.getId());
         existingUser.setEmail(updatedUser.getEmail());
         existingUser.setPassword(updatedUser.getPassword());
