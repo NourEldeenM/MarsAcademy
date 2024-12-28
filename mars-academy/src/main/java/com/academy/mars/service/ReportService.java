@@ -1,5 +1,12 @@
 package com.academy.mars.service;
 
+import com.academy.mars.entity.Courses;
+import com.academy.mars.entity.Grade;
+import com.academy.mars.entity.ReportDto;
+import com.academy.mars.entity.Student;
+import com.academy.mars.repository.CoursesRepository;
+import com.academy.mars.repository.GradeRepository;
+import com.academy.mars.repository.StudentRepository;
 import com.academy.mars.entity.*;
 import com.academy.mars.dto.ReportDto;
 import com.academy.mars.repository.*;
@@ -39,6 +46,7 @@ public class ReportService {
 
         for (Student student : students) {
             List<Grade> grades = gradeRepository.findByStudentAndCourse(student, course);
+
             for (Grade grade : grades) {
                 reports.add(new ReportDto(
                         student.getId(),
@@ -52,3 +60,4 @@ public class ReportService {
         return reports;
     }
 }
+

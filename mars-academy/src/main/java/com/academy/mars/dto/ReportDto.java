@@ -1,4 +1,4 @@
-package com.academy.mars.dto;
+package com.academy.mars.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
