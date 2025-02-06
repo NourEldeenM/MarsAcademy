@@ -1,6 +1,6 @@
 package com.academy.mars.dto;
 
-import com.academy.mars.entity.UserRole;
+import com.academy.mars.user.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

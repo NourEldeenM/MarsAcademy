@@ -1,8 +1,9 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.Lessons;
-import com.academy.mars.entity.LessonsOtp;
-import com.academy.mars.repository.LessonsOtpRepository;
+import com.academy.mars.lesson.*;
+import com.academy.mars.lessonOtp.LessonsOtp;
+import com.academy.mars.lessonOtp.LessonsOtpRepository;
+import com.academy.mars.lessonOtp.LessonsOtpServices;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

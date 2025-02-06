@@ -1,13 +1,13 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.Assignment;
-import com.academy.mars.entity.AssignmentSubmission;
-import com.academy.mars.entity.Courses;
-import com.academy.mars.entity.Student;
-import com.academy.mars.repository.AssignmentRepository;
-import com.academy.mars.repository.AssignmentSubmissionRepository;
-import com.academy.mars.repository.CoursesRepository;
-import com.academy.mars.repository.StudentRepository;
+import com.academy.mars.assignment.*;
+import com.academy.mars.assignmentSubmission.AssignmentSubmission;
+import com.academy.mars.assignmentSubmission.AssignmentSubmissionRepository;
+import com.academy.mars.assignmentSubmission.AssignmentSubmissionService;
+import com.academy.mars.course.Courses;
+import com.academy.mars.student.Student;
+import com.academy.mars.course.CoursesRepository;
+import com.academy.mars.student.StudentRepository;
 import org.junit.jupiter.api.*;
 import org.mockito.*;
 

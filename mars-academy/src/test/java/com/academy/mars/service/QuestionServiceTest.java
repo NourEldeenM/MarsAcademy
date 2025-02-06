@@ -1,7 +1,8 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.Question;
-import com.academy.mars.repository.QuestionRepository;
+import com.academy.mars.question.Question;
+import com.academy.mars.question.QuestionRepository;
+import com.academy.mars.question.QuestionService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

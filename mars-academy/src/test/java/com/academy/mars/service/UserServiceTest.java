@@ -1,7 +1,12 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.*;
-import com.academy.mars.repository.*;
+import com.academy.mars.admin.Admin;
+import com.academy.mars.admin.AdminRepository;
+import com.academy.mars.instructor.Instructor;
+import com.academy.mars.instructor.InstructorRepository;
+import com.academy.mars.student.Student;
+import com.academy.mars.student.StudentRepository;
+import com.academy.mars.user.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

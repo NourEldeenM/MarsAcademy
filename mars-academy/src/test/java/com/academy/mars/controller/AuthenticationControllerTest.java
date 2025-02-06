@@ -1,9 +1,10 @@
 package com.academy.mars.controller;
 
-import com.academy.mars.config.JwtUtils;
-import com.academy.mars.entity.User;
-import com.academy.mars.entity.UserRole;
-import com.academy.mars.service.AuthenticationService;
+import com.academy.mars.auth.AuthenticationController;
+import com.academy.mars.auth.config.JwtUtils;
+import com.academy.mars.user.User;
+import com.academy.mars.user.UserRole;
+import com.academy.mars.auth.AuthenticationService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

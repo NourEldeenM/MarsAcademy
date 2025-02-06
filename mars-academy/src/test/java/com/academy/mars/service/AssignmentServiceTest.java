@@ -1,7 +1,8 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.Assignment;
-import com.academy.mars.repository.AssignmentRepository;
+import com.academy.mars.assignment.Assignment;
+import com.academy.mars.assignment.AssignmentRepository;
+import com.academy.mars.assignment.AssignmentService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

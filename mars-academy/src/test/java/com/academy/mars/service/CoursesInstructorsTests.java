@@ -1,11 +1,11 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.CourseInstructors;
-import com.academy.mars.entity.Courses;
-import com.academy.mars.entity.Instructor;
-import com.academy.mars.repository.CourseInstructorsRepository;
-import com.academy.mars.repository.CoursesRepository;
-import com.academy.mars.repository.InstructorRepository;
+import com.academy.mars.course.*;
+import com.academy.mars.courseInstructor.CourseInstructors;
+import com.academy.mars.courseInstructor.CourseInstructorsRepository;
+import com.academy.mars.courseInstructor.CourseInstructorsServices;
+import com.academy.mars.instructor.Instructor;
+import com.academy.mars.instructor.InstructorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

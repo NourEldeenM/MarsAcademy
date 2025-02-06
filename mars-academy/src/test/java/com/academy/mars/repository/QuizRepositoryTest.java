@@ -1,6 +1,7 @@
 package com.academy.mars.repository;
 
-import com.academy.mars.entity.Quiz;
+import com.academy.mars.quiz.Quiz;
+import com.academy.mars.quiz.QuizRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;

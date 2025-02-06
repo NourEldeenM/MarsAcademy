@@ -1,11 +1,11 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.CourseEnrollments;
-import com.academy.mars.entity.Courses;
-import com.academy.mars.entity.Student;
-import com.academy.mars.repository.CourseEnrollmentsRepository;
-import com.academy.mars.repository.CoursesRepository;
-import com.academy.mars.repository.StudentRepository;
+import com.academy.mars.course.*;
+import com.academy.mars.courseEnrollment.CourseEnrollments;
+import com.academy.mars.courseEnrollment.CourseEnrollmentsRepository;
+import com.academy.mars.courseEnrollment.CourseEnrollmentsServices;
+import com.academy.mars.student.Student;
+import com.academy.mars.student.StudentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

@@ -1,8 +1,9 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.Grade;
-import com.academy.mars.entity.Quiz;
-import com.academy.mars.repository.GradeRepository;
+import com.academy.mars.grade.Grade;
+import com.academy.mars.quiz.Quiz;
+import com.academy.mars.grade.GradeRepository;
+import com.academy.mars.grade.GradeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

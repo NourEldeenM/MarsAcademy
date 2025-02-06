@@ -1,8 +1,9 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.Notification;
-import com.academy.mars.entity.NotificationType;
-import com.academy.mars.repository.NotificationRepository;
+import com.academy.mars.notification.Notification;
+import com.academy.mars.notification.NotificationService;
+import com.academy.mars.notification.NotificationType;
+import com.academy.mars.notification.NotificationRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

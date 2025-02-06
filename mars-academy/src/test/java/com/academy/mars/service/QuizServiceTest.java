@@ -1,10 +1,11 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.Courses;
-import com.academy.mars.entity.Quiz;
-import com.academy.mars.entity.Question;
-import com.academy.mars.repository.QuizRepository;
-import com.academy.mars.repository.QuestionRepository;
+import com.academy.mars.course.Courses;
+import com.academy.mars.quiz.Quiz;
+import com.academy.mars.question.Question;
+import com.academy.mars.quiz.QuizService;
+import com.academy.mars.quiz.QuizRepository;
+import com.academy.mars.question.QuestionRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;

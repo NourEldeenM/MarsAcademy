@@ -1,6 +1,12 @@
 package com.academy.mars.repository;
 
-import com.academy.mars.entity.*;
+import com.academy.mars.assignment.Assignment;
+import com.academy.mars.assignmentSubmission.AssignmentSubmission;
+import com.academy.mars.assignmentSubmission.AssignmentSubmissionRepository;
+import com.academy.mars.course.Courses;
+import com.academy.mars.student.Student;
+import com.academy.mars.user.User;
+import com.academy.mars.user.UserRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;

@@ -1,7 +1,8 @@
 package com.academy.mars.service;
 
-import com.academy.mars.entity.Courses;
-import com.academy.mars.repository.CoursesRepository;
+import com.academy.mars.course.Courses;
+import com.academy.mars.course.CoursesRepository;
+import com.academy.mars.course.CoursesServices;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

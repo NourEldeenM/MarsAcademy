@@ -1,9 +1,10 @@
 package com.academy.mars.repository;
 
-import com.academy.mars.entity.Grade;
-import com.academy.mars.entity.Student;
-import com.academy.mars.entity.Quiz;
-import com.academy.mars.entity.Assignment;
+import com.academy.mars.grade.Grade;
+import com.academy.mars.student.Student;
+import com.academy.mars.quiz.Quiz;
+import com.academy.mars.assignment.Assignment;
+import com.academy.mars.grade.GradeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,7 +1,8 @@
 package com.academy.mars.repository;
 
-import com.academy.mars.entity.User;
-import com.academy.mars.entity.UserRole;
+import com.academy.mars.user.User;
+import com.academy.mars.user.UserRepository;
+import com.academy.mars.user.UserRole;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
