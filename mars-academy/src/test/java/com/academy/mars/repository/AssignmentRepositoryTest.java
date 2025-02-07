@@ -29,7 +29,7 @@ class AssignmentServiceTest {
 
     @Test
     void findAllByCourseId() {
-        long courseId = 1L;
+        String courseId = "";
         Assignment assignment1 = new Assignment();
         assignment1.setCourseId(courseId);
         assignment1.setTitle("Assignment 1");

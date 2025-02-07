@@ -6,13 +6,13 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 
-public interface CoursesRepository extends JpaRepository<Courses, Long> {
-    void deleteById(Long id);
+public interface CoursesRepository extends JpaRepository<Courses, String> {
+    void deleteById(String id);
 
     @Query("SELECT c FROM Courses c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))")
     List<Courses> findByName(String name);
 
-    Optional<Courses> findById(Long id);
+    Optional<Courses> findById(String id);
 
     @Query("SELECT c FROM Courses c WHERE LOWER(c.category) LIKE LOWER(CONCAT('%', :category, '%'))")
     List<Courses> findByCategory(String category);

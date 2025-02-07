@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface QuizRepository extends JpaRepository<Quiz, Long> {
-    List<Quiz> findByCourseId(long courseId);
-    Optional<Quiz> findById(long quizId);
-    Optional<Quiz> findByIdAndCourseId(long quizId, long courseId);
+public interface QuizRepository extends JpaRepository<Quiz, String> {
+    List<Quiz> findByCourseId(String courseId);
+    Optional<Quiz> findById(String quizId);
+    Optional<Quiz> findByIdAndCourseId(String quizId, String courseId);
 }

@@ -31,7 +31,7 @@ public class ReportService {
         this.coursesRepository = coursesRepository;
     }
 
-    public List<ReportDto> getReportByCourse(Long courseId) {
+    public List<ReportDto> getReportByCourse(String courseId) {
         Optional<Courses> courseOpt = coursesRepository.findById(courseId);
         if (courseOpt.isEmpty()) {
             return new ArrayList<>();

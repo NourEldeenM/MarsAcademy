@@ -16,20 +16,20 @@ public class QuestionBankController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can create question banks
     @PostMapping
-    public String createQuestionBank(@PathVariable long courseId, @RequestBody QuestionBank questionBank) {
+    public String createQuestionBank(@PathVariable String courseId, @RequestBody QuestionBank questionBank) {
         questionBankService.createQuestionBank(courseId, questionBank);
         return "Question bank created successfully!";
     }
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can access question banks
     @GetMapping
-    public List<QuestionBank> getAllQuestionBanks(@PathVariable long courseId) {
+    public List<QuestionBank> getAllQuestionBanks(@PathVariable String courseId) {
         return questionBankService.getQuestionBanks(courseId);
     }
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can delete question banks
     @DeleteMapping("/{questionBankId}")
-    public String deleteQuestionBank(@PathVariable long courseId, @PathVariable long questionBankId) {
+    public String deleteQuestionBank(@PathVariable String courseId, @PathVariable String questionBankId) {
         List<QuestionBank> questionBanks = questionBankService.getQuestionBankByCourse(courseId);
 
         Optional<QuestionBank> questionBankToBeDeleted = questionBanks.stream()

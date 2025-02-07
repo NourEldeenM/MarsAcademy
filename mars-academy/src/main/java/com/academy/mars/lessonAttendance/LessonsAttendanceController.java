@@ -31,7 +31,7 @@ public class LessonsAttendanceController {
     // POST API to add attendance for a student in a lesson
     @PostMapping("/student/{studentId}")
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
-    public ResponseEntity<?> addAttendance(@PathVariable Long studentId,@RequestParam String otp) {
+    public ResponseEntity<?> addAttendance(@PathVariable String studentId,@RequestParam String otp) {
         try {
             return ResponseEntity.status(200).body(lessonsAttendanceServices.addAttendance(studentId,otp));
         }catch (Exception e){
@@ -42,7 +42,7 @@ public class LessonsAttendanceController {
     // GET API to get the attendance records for a specific lesson
     @GetMapping("/lesson/{lessonId}")
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
-    public ResponseEntity<List<Student>> getStudentsByLesson(@PathVariable Long lessonId) {
+    public ResponseEntity<List<Student>> getStudentsByLesson(@PathVariable String lessonId) {
         Lessons lesson = new Lessons();
         lesson.setId(lessonId);
 
@@ -54,7 +54,7 @@ public class LessonsAttendanceController {
     // GET API to get the attendance records for a specific student
     @GetMapping("/student/{studentId}")
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
-    public ResponseEntity<List<Lessons>> getLessonsByStudent(@PathVariable Long studentId) {
+    public ResponseEntity<List<Lessons>> getLessonsByStudent(@PathVariable String studentId) {
         Student student = new Student();
         student.setId(studentId);
 

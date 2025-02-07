@@ -15,10 +15,10 @@ import java.util.List;
 
 public class Quiz {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
-    private long courseId;
+    private String courseId;
     private String title;
     private String description;
 

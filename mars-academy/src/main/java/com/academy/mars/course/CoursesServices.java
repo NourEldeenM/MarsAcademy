@@ -28,14 +28,14 @@ public class CoursesServices {
         return courses;
     }
 
-    public Courses getCourseById(Long id){
+    public Courses getCourseById(String id){
         if(!courseExist(id)){
             throw new RuntimeException("Course Not Found");
         }
         return coursesRepository.findById(id).get();
     }
     @Transactional
-    public void deleteCourse(Long id) {
+    public void deleteCourse(String id) {
         coursesRepository.deleteById(id);
     }
 
@@ -70,7 +70,7 @@ public class CoursesServices {
         return coursesRepository.findByTitle(categoryTitle);
     }
 
-    public Boolean courseExist(Long courseId){
+    public Boolean courseExist(String courseId){
         return coursesRepository.findById(courseId).isPresent();
     }
 }

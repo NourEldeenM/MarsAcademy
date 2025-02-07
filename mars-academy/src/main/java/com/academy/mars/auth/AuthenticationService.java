@@ -46,7 +46,7 @@ public class AuthenticationService {
         }
 
         userRepository.save(newUser);
-        Long userId = newUser.getId(); // get the auto-generated ID
+        String userId = newUser.getId(); // get the auto-generated ID
         Map<String, Object> response = new HashMap<>();
         response.put("user", convertToDto(newUser));
         response.put("id", userId);

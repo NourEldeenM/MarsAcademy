@@ -28,7 +28,7 @@ public class CourseEnrollmentsServices {
 
 
     @Transactional
-    public void enrollStudentInCourse(Long courseId, Long studentId){
+    public void enrollStudentInCourse(String courseId, String studentId){
         Courses course = courseExist(courseId).get();
         Student student = studentExist(studentId).get();
 
@@ -40,7 +40,7 @@ public class CourseEnrollmentsServices {
         courseEnrollmentsRepository.save(enrollment);
     }
 
-    public void unEnrollStudentInCourse(Long courseId, Long studentId){
+    public void unEnrollStudentInCourse(String courseId, String studentId){
         Courses course = courseExist(courseId).get();
         Student student = studentExist(studentId).get();
 
@@ -51,20 +51,20 @@ public class CourseEnrollmentsServices {
         courseEnrollmentsRepository.delete(courseEnrollment);
     }
 
-    public List<Student> getAllStudentsInCourse(Long courseId){
+    public List<Student> getAllStudentsInCourse(String courseId){
         Courses course = courseExist(courseId).get();
 
         List<Student> students = courseEnrollmentsRepository.findByCourse(course);
         return students;
     }
 
-     public List<Courses> findAllCoursesStudentEnrollIn( Long studentId){
+     public List<Courses> findAllCoursesStudentEnrollIn( String studentId){
          Student student = studentExist(studentId).get();
          List<Courses> courses=courseEnrollmentsRepository.findByStudent(student);
          return courses;
      }
 
-    private Optional<Courses> courseExist(Long id){
+    private Optional<Courses> courseExist(String id){
         Optional<Courses> courseOptional = coursesRepository.findById(id);
         if(courseOptional.isEmpty()){
             throw new RuntimeException("Course with ID " + id + " not found");
@@ -72,7 +72,7 @@ public class CourseEnrollmentsServices {
         return courseOptional;
     }
 
-    private Optional<Student> studentExist(Long id){
+    private Optional<Student> studentExist(String id){
         Optional<Student> userOptional = studentRepository.findById(id);
         if(userOptional.isEmpty()){
             throw new RuntimeException("Student with ID " + id + " not found");

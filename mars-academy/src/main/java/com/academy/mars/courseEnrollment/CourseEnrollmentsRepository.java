@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface CourseEnrollmentsRepository extends JpaRepository<CourseEnrollments, Long> {
+public interface CourseEnrollmentsRepository extends JpaRepository<CourseEnrollments, String> {
 
     @Query("SELECT ce.student FROM CourseEnrollments ce WHERE ce.course = :course")
     List<Student> findByCourse(Courses course);

@@ -14,8 +14,8 @@ import lombok.Setter;
 public class CourseEnrollments {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name = "student_id", nullable = false)

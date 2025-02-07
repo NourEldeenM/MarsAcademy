@@ -19,7 +19,7 @@ public class LessonsOtpController {
     // POST: Create OTP for a lesson
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
-    public ResponseEntity<?> createOtp(@PathVariable Long lessonId) {
+    public ResponseEntity<?> createOtp(@PathVariable String lessonId) {
         try {
             LessonsOtp lessonsOtp = lessonsOtpServices.createOtpForLesson(lessonId);
             return ResponseEntity.status(201).body(lessonsOtp);
@@ -31,7 +31,7 @@ public class LessonsOtpController {
     // GET: Get OTP for a lesson
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
-    public ResponseEntity<?> getOtp(@PathVariable Long lessonId) {
+    public ResponseEntity<?> getOtp(@PathVariable String lessonId) {
         try {
             LessonsOtp lessonsOtp = lessonsOtpServices.getOtpForLesson(lessonId);
             return ResponseEntity.status(200).body(lessonsOtp);
@@ -43,7 +43,7 @@ public class LessonsOtpController {
     // PUT: Update OTP for a lesson
     @PutMapping
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
-    public ResponseEntity<?> updateOtp(@PathVariable Long lessonId) {
+    public ResponseEntity<?> updateOtp(@PathVariable String lessonId) {
         try {
             LessonsOtp updatedOtp = lessonsOtpServices.updateOtpForLesson(lessonId);
             return ResponseEntity.status(200).body(updatedOtp);
@@ -55,7 +55,7 @@ public class LessonsOtpController {
     // DELETE: Delete OTP for a lesson
     @DeleteMapping
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
-    public ResponseEntity<?> deleteOtp(@PathVariable Long lessonId) {
+    public ResponseEntity<?> deleteOtp(@PathVariable String lessonId) {
         try {
             lessonsOtpServices.deleteOtpForLesson(lessonId);
             return ResponseEntity.status(200).body(json("Message", "OTP for lesson " + lessonId + " has been deleted"));

@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}") // anyone can go to student's profile
-    public ResponseEntity<?> getUserById(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserById(@PathVariable String userId) {
         try {
             User user = userService.getUserById(userId);
             return ResponseEntity.status(200).body(user);
@@ -57,7 +57,7 @@ public class UserController {
 
     // anyone can update his profile
     @PutMapping("/{userId}")
-    public ResponseEntity<?> updateUser(@PathVariable Long userId, @RequestBody User user) {
+    public ResponseEntity<?> updateUser(@PathVariable String userId, @RequestBody User user) {
         try {
             User updatedUser = userService.updateUser(userId, user);
             return ResponseEntity.status(200).body(updatedUser);
@@ -68,7 +68,7 @@ public class UserController {
 
     // anyone can delete his own account
     @DeleteMapping("/{userId}")
-    public ResponseEntity<?> deleteUser(@PathVariable Long userId) {
+    public ResponseEntity<?> deleteUser(@PathVariable String userId) {
         try {
             userService.deleteUser(userId);
             return ResponseEntity.status(200).body(json("Message", "User deleted successfully"));

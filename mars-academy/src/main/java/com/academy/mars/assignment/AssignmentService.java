@@ -15,16 +15,16 @@ public class AssignmentService {
         assignmentRepository.save(assignment);
     }
 
-    public List<Assignment> getAllAssignmentsByCourseId(long courseId) {
+    public List<Assignment> getAllAssignmentsByCourseId(String courseId) {
         return assignmentRepository.findAllByCourseId(courseId);
     }
 
-    public Assignment getAssignmentByCourseIdAndAssignmentId(long courseId, Long assignmentId) {
+    public Assignment getAssignmentByCourseIdAndAssignmentId(String courseId, String assignmentId) {
         return assignmentRepository.findByCourseIdAndId(courseId, assignmentId)
                 .orElseThrow(() -> new RuntimeException("assignment not found"));
     }
 
-    public void updateAssignment(long courseId, Long assignmentId, Assignment assignment) {
+    public void updateAssignment(String courseId, String assignmentId, Assignment assignment) {
         Assignment existingAssignment = assignmentRepository.findByCourseIdAndId(courseId, assignmentId)
                 .orElseThrow(() -> new RuntimeException("assignment not found"));
         existingAssignment.setTitle(assignment.getTitle());
@@ -33,7 +33,7 @@ public class AssignmentService {
         assignmentRepository.save(existingAssignment);
     }
 
-    public boolean deleteAssignment(long courseId, Long assignmentId) {
+    public boolean deleteAssignment(String courseId, String assignmentId) {
         Assignment assignment = assignmentRepository.findByCourseIdAndId(courseId, assignmentId)
                 .orElseThrow(() -> new RuntimeException("assignment not found"));
         assignmentRepository.delete(assignment);

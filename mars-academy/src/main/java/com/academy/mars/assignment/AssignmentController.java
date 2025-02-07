@@ -15,7 +15,7 @@ public class AssignmentController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can create assignments
     @PostMapping
-    public String createAssignment(@PathVariable long courseId, @RequestBody Assignment assignment) {
+    public String createAssignment(@PathVariable String courseId, @RequestBody Assignment assignment) {
         assignment.setCourseId(courseId);
         assignmentService.createAssignment(assignment);
         return "assignment created successfully!";
@@ -24,19 +24,19 @@ public class AssignmentController {
     // Get all assignments for a course
     @PreAuthorize("hasAnyRole('INSTRUCTOR', 'STUDENT')")   // students and instructors can get assignments
     @GetMapping
-    public List<Assignment> getAllAssignments(@PathVariable long courseId) {
+    public List<Assignment> getAllAssignments(@PathVariable String courseId) {
         return assignmentService.getAllAssignmentsByCourseId(courseId);
     }
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR', 'STUDENT')")   // students and instructors can get assignments
     @GetMapping("/{assignmentId}")
-    public Assignment getAssignment(@PathVariable long courseId, @PathVariable Long assignmentId) {
+    public Assignment getAssignment(@PathVariable String courseId, @PathVariable String assignmentId) {
         return assignmentService.getAssignmentByCourseIdAndAssignmentId(courseId, assignmentId);
     }
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can edit assignments
     @PatchMapping("/{assignmentId}")
-    public String updateAssignment(@PathVariable long courseId, @PathVariable Long assignmentId, @RequestBody Assignment assignment) {
+    public String updateAssignment(@PathVariable String courseId, @PathVariable String assignmentId, @RequestBody Assignment assignment) {
         assignment.setCourseId(courseId);
         assignment.setId(assignmentId);
         assignmentService.updateAssignment(courseId, assignmentId, assignment);
@@ -45,7 +45,7 @@ public class AssignmentController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can delete assignments
     @DeleteMapping("/{assignmentId}")
-    public String deleteAssignment(@PathVariable long courseId, @PathVariable Long assignmentId) {
+    public String deleteAssignment(@PathVariable String courseId, @PathVariable String assignmentId) {
         boolean deleted = assignmentService.deleteAssignment(courseId, assignmentId);
         if (deleted) {
             return "assignment deleted successfully!";

@@ -17,8 +17,10 @@ import java.util.List;
 @Table(name = "instructors")
 public class Instructor {
 
+
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "specialization", nullable = false)

@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface LessonsOtpRepository extends JpaRepository<LessonsOtp, Long> {
+public interface LessonsOtpRepository extends JpaRepository<LessonsOtp, String> {
     boolean existsByOtp(String otp);
 
-    Optional<LessonsOtp> findById(Long lessonId);
+    Optional<LessonsOtp> findById(String lessonId);
 
     Optional<LessonsOtp> findByLesson(Lessons lesson);
 

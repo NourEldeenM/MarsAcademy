@@ -15,7 +15,8 @@ import lombok.Setter;
 public class Admin {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @OneToOne
     @MapsId

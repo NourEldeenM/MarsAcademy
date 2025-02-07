@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface InstructorRepository extends JpaRepository<Instructor, Long> {
-    Optional<Instructor> findById(Long id);
+public interface InstructorRepository extends JpaRepository<Instructor, String> {
+    Optional<Instructor> findById(String id);
 }

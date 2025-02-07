@@ -26,7 +26,7 @@ public class CourseInstructorsServices {
     }
 
     @Transactional
-    public CourseInstructors addInstructorToCourse(Long courseId, Long instructorId) {
+    public CourseInstructors addInstructorToCourse(String courseId, String instructorId) {
         Courses course = courseExist(courseId).get();
         Instructor instructor = instructorExist(instructorId).get();
 
@@ -34,36 +34,36 @@ public class CourseInstructorsServices {
         return courseInstructorsRepository.save(courseInstructors);
     }
 
-    public List<CourseInstructors> getInstructorsByCourse(Long courseId) {
+    public List<CourseInstructors> getInstructorsByCourse(String courseId) {
         Courses course = courseExist(courseId).get();
         return courseInstructorsRepository.findByCourse(course);
     }
 
-    public List<CourseInstructors> getCoursesByInstructor(Long instructorId) {
+    public List<CourseInstructors> getCoursesByInstructor(String instructorId) {
         Instructor instructor = instructorExist(instructorId).get();
         return courseInstructorsRepository.findByInstructor(instructor);
     }
 
     @Transactional
-    public void removeInstructorFromCourse(Long courseId, Long instructorId) {
+    public void removeInstructorFromCourse(String courseId, String instructorId) {
         Courses course = courseExist(courseId).get();
         Instructor instructor = instructorExist(instructorId).get();
         courseInstructorsRepository.deleteByCourseAndInstructor(course, instructor);
     }
 
     @Transactional
-    public void removeAllInstructorsFromCourse(Long courseId) {
+    public void removeAllInstructorsFromCourse(String courseId) {
         Courses course = courseExist(courseId).get();
         courseInstructorsRepository.deleteByCourse(course);
     }
 
-    public boolean isACourseInstructor(Long courseId, Long instructorId) {
+    public boolean isACourseInstructor(String courseId, String instructorId) {
         Courses course = courseExist(courseId).get();
         Instructor instructor = instructorExist(instructorId).get();
         return courseInstructorsRepository.findByCourseAndInstructor(course, instructor).isPresent();
     }
 
-    private Optional<Courses> courseExist(Long id){
+    private Optional<Courses> courseExist(String id){
         Optional<Courses> courseOptional = coursesRepository.findById(id);
         if(courseOptional.isEmpty()){
             throw new RuntimeException("Course with ID " + id + " not found");
@@ -71,7 +71,7 @@ public class CourseInstructorsServices {
         return courseOptional;
     }
 
-    private Optional<Instructor> instructorExist(Long id){
+    private Optional<Instructor> instructorExist(String id){
         Optional<Instructor> userOptional = instructorRepository.findById(id);
         if(userOptional.isEmpty()){
             throw new RuntimeException("Instructor with ID " + id + " not found");

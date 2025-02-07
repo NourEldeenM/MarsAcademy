@@ -18,8 +18,8 @@ import java.util.Date;
 public class LessonsFiles {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @ManyToOne
     @JsonIgnore

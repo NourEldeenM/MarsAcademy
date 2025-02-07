@@ -10,32 +10,25 @@ import java.time.LocalDateTime;
 @Getter
 public class Notification {
     @Id
-    @SequenceGenerator(
-            name = "notification_sequence",
-            sequenceName = "notification_sequence",
-            allocationSize = 1
-
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "notification_sequence"
-    )
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @Enumerated(EnumType.STRING)
     private NotificationType type;
     private String message;
     private boolean read;
     private LocalDateTime dateTime;
-    private Long receiverId;
+    private String receiverId;
 
-    public Notification(NotificationType type,String message,Long receiverId){
+    public Notification(NotificationType type,String message,String receiverId){
         this.type = type;
         this.message = message;
         this.receiverId = receiverId;
         this.read = false;
         this.dateTime = LocalDateTime.now();
     }
+
+    public Notification() {}
 
     public void markAsRead(){
         this.read = true;

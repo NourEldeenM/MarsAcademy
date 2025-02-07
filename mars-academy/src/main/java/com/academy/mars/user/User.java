@@ -25,8 +25,8 @@ import java.util.List;
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Use IDENTITY for Long id generation
-    private Long id;  // Keep the id as Long
+    @GeneratedValue(strategy = GenerationType.UUID)  // Use IDENTITY for Long id generation
+    private String id;  // Keep the id as Long
     @NotNull(message = "username can't be null")
     private String username;
     @NotNull(message = "email can't be null")

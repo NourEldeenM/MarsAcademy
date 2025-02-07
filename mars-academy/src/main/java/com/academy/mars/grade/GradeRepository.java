@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface GradeRepository extends JpaRepository<Grade, Long> {
-    List<Grade> findByCourseId(long courseId);
+public interface GradeRepository extends JpaRepository<Grade, String> {
+    List<Grade> findByCourseId(String courseId);
 
-    Optional<Grade> findByStudentIdAndQuizId(long studentId, long quizId);
+    Optional<Grade> findByStudentIdAndQuizId(String studentId, String quizId);
 
-    Optional<Grade> findByStudentIdAndAssignmentId(long studentId, long assignmentId);
+    Optional<Grade> findByStudentIdAndAssignmentId(String studentId, String assignmentId);
 
-    void deleteByStudentIdAndQuizId(long studentId, long quizId);
+    void deleteByStudentIdAndQuizId(String studentId, String quizId);
 
-    void deleteByStudentIdAndAssignmentId(long studentId, long assignmentId);
+    void deleteByStudentIdAndAssignmentId(String studentId, String assignmentId);
 
     @Query("SELECT g FROM Grade g WHERE g.student = :student AND g.course = :course")
     List<Grade> findByStudentAndCourse(Student student, Optional<Courses> course);

@@ -4,9 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface LessonsRepository extends JpaRepository<Lessons, Long> {
+public interface LessonsRepository extends JpaRepository<Lessons, String> {
 
-    List<Lessons> findByCourseId(Long course_id);
+    List<Lessons> findByCourseId(String course_id);
 
-    Optional<Lessons> findById(Long id);
+    Optional<Lessons> findById(String id);
 }

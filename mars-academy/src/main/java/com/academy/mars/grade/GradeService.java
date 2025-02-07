@@ -15,15 +15,15 @@ public class GradeService {
     private GradeRepository gradeRepository;
 
 
-    public List<Grade> getGradesByCourseId(long courseId) {
+    public List<Grade> getGradesByCourseId(String courseId) {
         return gradeRepository.findByCourseId(courseId);
     }
 
-    public Optional<Grade> getGradeByStudentAndQuiz(long studentId, long quizId) {
+    public Optional<Grade> getGradeByStudentAndQuiz(String studentId, String quizId) {
         return gradeRepository.findByStudentIdAndQuizId(studentId, quizId);
     }
 
-    public Optional<Grade> getGradeByStudentAndAssignment(long studentId, long assignmentId) {
+    public Optional<Grade> getGradeByStudentAndAssignment(String studentId, String assignmentId) {
         return gradeRepository.findByStudentIdAndAssignmentId(studentId, assignmentId);
     }
 
@@ -31,7 +31,7 @@ public class GradeService {
         gradeRepository.save(grade);
     }
 
-    public void updateFeedback(long gradeId, String feedback, boolean manualFeedback) {
+    public void updateFeedback(String gradeId, String feedback, boolean manualFeedback) {
         Optional<Grade> gradeOptional = gradeRepository.findById(gradeId);
         if (gradeOptional.isPresent()) {
             Grade grade = gradeOptional.get();
@@ -41,7 +41,7 @@ public class GradeService {
         }
     }
 
-    public boolean deleteGradeByQuiz(long studentId, long quizId) {
+    public boolean deleteGradeByQuiz(String studentId, String quizId) {
         Optional<Grade> grade = gradeRepository.findByStudentIdAndQuizId(studentId, quizId);
         if (grade.isPresent()) {
             gradeRepository.deleteByStudentIdAndQuizId(studentId, quizId);
@@ -50,7 +50,7 @@ public class GradeService {
         return false;
     }
 
-    public boolean deleteGradeByAssignment(long studentId, long assignmentId) {
+    public boolean deleteGradeByAssignment(String studentId, String assignmentId) {
         Optional<Grade> grade = gradeRepository.findByStudentIdAndAssignmentId(studentId, assignmentId);
         if (grade.isPresent()) {
             gradeRepository.deleteByStudentIdAndAssignmentId(studentId, assignmentId);
@@ -59,7 +59,7 @@ public class GradeService {
         return false;
     }
 
-    public void gradeStudent(long courseId, long studentId, long instructorId, Grade grade) {
+    public void gradeStudent(String courseId, String studentId, String instructorId, Grade grade) {
         grade.setStudent(new Student());
         grade.getStudent().setId(studentId);
         grade.setInstructor(new Instructor());

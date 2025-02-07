@@ -13,8 +13,8 @@ import java.util.List;
 @Entity
 public class QuestionBank {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     private String name;
     private String description;

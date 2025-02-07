@@ -27,7 +27,7 @@ public class AssignmentSubmissionService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public AssignmentSubmission submitAssignment(Long assignmentId, Long studentId, String fileLink, Long courseId) {
+    public AssignmentSubmission submitAssignment(String assignmentId, String studentId, String fileLink, String courseId) {
         if (fileLink == null || fileLink.isEmpty()) {
             throw new RuntimeException("File link cannot be null or empty");
         }
@@ -54,11 +54,11 @@ public class AssignmentSubmissionService {
 
 
 
-    public List<AssignmentSubmission> getSubmissionsByStudent(Long studentId) {
+    public List<AssignmentSubmission> getSubmissionsByStudent(String studentId) {
         return assignmentSubmissionRepository.findByStudentId(studentId);
     }
 
-    public List<AssignmentSubmission> getSubmissionsByStudentAndCourse(Long studentId, Long courseId) {
+    public List<AssignmentSubmission> getSubmissionsByStudentAndCourse(String studentId, String courseId) {
         return assignmentSubmissionRepository.findByStudentIdAndCourseId(studentId, courseId);
     }
 }

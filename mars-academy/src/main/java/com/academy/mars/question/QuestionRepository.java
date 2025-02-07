@@ -6,18 +6,18 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface QuestionRepository extends JpaRepository<Question, Long> {
-    List<Question> findByQuizId(long quizId);
+public interface QuestionRepository extends JpaRepository<Question, String> {
+    List<Question> findByQuizId(String quizId);
 
-    boolean existsById(long id);
+    boolean existsById(String id);
 
-    void deleteById(long id);
+    void deleteById(String id);
 
-    List<Question> findByCourseId(long courseId);
-
-
-    List<Question> findByQuestionBankId(long questionBankId);
+    List<Question> findByCourseId(String courseId);
 
 
-    List<Question> findByAssignmentId(long assignmentId);
+    List<Question> findByQuestionBankId(String questionBankId);
+
+
+    List<Question> findByAssignmentId(String assignmentId);
 }

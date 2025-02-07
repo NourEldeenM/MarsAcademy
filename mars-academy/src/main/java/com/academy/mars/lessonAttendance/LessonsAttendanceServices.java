@@ -61,7 +61,7 @@ public class LessonsAttendanceServices {
     }
 
     // Add attendance record for a student in a lesson
-    public LessonsAttendance addAttendance(Long studentId, String otp) {
+    public LessonsAttendance addAttendance(String studentId, String otp) {
         Optional<Student> student=studentRepository.findById(studentId);
         if(student.isEmpty()){
             throw new RuntimeException( "Student not found");

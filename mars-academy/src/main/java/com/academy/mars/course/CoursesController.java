@@ -83,7 +83,7 @@ public class CoursesController {
     // Delete a course by name
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
     @DeleteMapping
-    public ResponseEntity<?> deleteCourse(@RequestParam Long id) {
+    public ResponseEntity<?> deleteCourse(@RequestParam String id) {
         try {
             if (!coursesServices.courseExist(id)) {
                 return ResponseEntity.status(404).body(json("Error", "Course not found"));

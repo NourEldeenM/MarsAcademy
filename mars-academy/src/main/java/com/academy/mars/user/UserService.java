@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
         this.adminRepository = adminRepository;
     }
 
-    public void deleteUser(Long userId) {
+    public void deleteUser(String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(String.format(USER_NOT_FOUND_MSG, userId)));
         //delete explicitly
@@ -58,7 +58,7 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
-    public User getUserById(Long userId) {
+    public User getUserById(String userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format(USER_NOT_FOUND_MSG, userId)));
@@ -89,7 +89,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User updateUser(Long userId, User updatedUser) {
+    public User updateUser(String userId, User updatedUser) {
         User existingUser = userRepository.findById(userId)
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format(USER_NOT_FOUND_MSG, userId)));
@@ -108,7 +108,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
-        return userRepository.findById(Long.parseLong(id)) // Assuming `id` is a Long
+        return userRepository.findById(id) // Assuming `id` is a String
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with id: " + id));
     }
 }

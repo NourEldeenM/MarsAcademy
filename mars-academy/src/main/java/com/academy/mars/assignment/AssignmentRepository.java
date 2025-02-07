@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
-    List<Assignment> findAllByCourseId(long courseId);
-    Optional<Assignment> findByCourseIdAndId(long courseId, Long id);
+public interface AssignmentRepository extends JpaRepository<Assignment, String> {
+    List<Assignment> findAllByCourseId(String courseId);
+    Optional<Assignment> findByCourseIdAndId(String courseId, String id);
 }

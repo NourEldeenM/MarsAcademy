@@ -27,9 +27,9 @@ public class GradeController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can grade courses
     @PostMapping({"/{courseId}/students/{studentId}/instructors/{instructorId}/grades"})
-    public ResponseEntity<String> gradeStudent(@PathVariable long courseId,
-                                               @PathVariable long studentId,
-                                               @PathVariable long instructorId,
+    public ResponseEntity<String> gradeStudent(@PathVariable String courseId,
+                                               @PathVariable String studentId,
+                                               @PathVariable String instructorId,
                                                @RequestBody Grade grade) {
         Student student = new Student();
         student.setId(studentId);
@@ -47,9 +47,9 @@ public class GradeController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can grade assessments
     @PostMapping({"/{courseId}/quizzes/{quizId}/grades", "/{courseId}/assignments/{assignmentId}/grades"})
-    public ResponseEntity<String> submitGrade(@PathVariable long courseId,
-                                              @PathVariable(required = false) Long quizId,
-                                              @PathVariable(required = false) Long assignmentId,
+    public ResponseEntity<String> submitGrade(@PathVariable String courseId,
+                                              @PathVariable(required = false) String quizId,
+                                              @PathVariable(required = false) String assignmentId,
                                               @RequestBody Grade grade) {
         Courses course = new Courses();
         course.setId(courseId);
@@ -71,9 +71,9 @@ public class GradeController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR', 'STUDENT')")    // students and instructors can see feedback
     @GetMapping("/{courseId}/assignments/{assignmentId}/feedback")
-    public ResponseEntity<String> getFeedbackForAssignment(@PathVariable long courseId,
-                                                           @PathVariable long assignmentId,
-                                                           @RequestParam long studentId) {
+    public ResponseEntity<String> getFeedbackForAssignment(@PathVariable String courseId,
+                                                           @PathVariable String assignmentId,
+                                                           @RequestParam String studentId) {
         Optional<Grade> gradeOptional = gradeService.getGradeByStudentAndAssignment(studentId, assignmentId);
         if (gradeOptional.isPresent()) {
             return ResponseEntity.ok(gradeOptional.get().getFeedback());
@@ -83,8 +83,8 @@ public class GradeController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can write feedback
     @PostMapping("/{courseId}/assignments/{assignmentId}/feedback")
-    public ResponseEntity<String> provideManualFeedback(@PathVariable long courseId,
-                                                        @PathVariable long assignmentId,
+    public ResponseEntity<String> provideManualFeedback(@PathVariable String courseId,
+                                                        @PathVariable String assignmentId,
                                                         @RequestBody Grade grade) {
         grade.setManualFeedback(true);
         Courses course = new Courses();
@@ -99,9 +99,9 @@ public class GradeController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can edit feedback
     @PatchMapping("/{courseId}/assignments/{assignmentId}/feedback")
-    public ResponseEntity<String> updateAssignmentFeedback(@PathVariable long courseId,
-                                                           @PathVariable long assignmentId,
-                                                           @RequestParam long gradeId,
+    public ResponseEntity<String> updateAssignmentFeedback(@PathVariable String courseId,
+                                                           @PathVariable String assignmentId,
+                                                           @RequestParam String gradeId,
                                                            @RequestParam String feedback) {
         gradeService.updateFeedback(gradeId, feedback, true);
         return ResponseEntity.ok("Feedback updated successfully!");
@@ -109,16 +109,16 @@ public class GradeController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can see all course grades
     @GetMapping("/{courseId}/grades")
-    public List<Grade> getGradesForCourse(@PathVariable long courseId) {
+    public List<Grade> getGradesForCourse(@PathVariable String courseId) {
         return gradeService.getGradesByCourseId(courseId);
     }
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR', 'STUDENT')")    // instructors and students can see assessments' grades
     @GetMapping({"/{courseId}/quizzes/{quizId}/grades", "/{courseId}/assignments/{assignmentId}/grades"})
-    public ResponseEntity<Grade> getGradeByType(@PathVariable long courseId,
-                                                @PathVariable(required = false) Long quizId,
-                                                @PathVariable(required = false) Long assignmentId,
-                                                @RequestParam long studentId) {
+    public ResponseEntity<Grade> getGradeByType(@PathVariable String courseId,
+                                                @PathVariable(required = false) String quizId,
+                                                @PathVariable(required = false) String assignmentId,
+                                                @RequestParam String studentId) {
         Optional<Grade> grade;
         if (quizId != null) {
             grade = gradeService.getGradeByStudentAndQuiz(studentId, quizId);
@@ -131,10 +131,10 @@ public class GradeController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can edit grades
     @PatchMapping({"/{courseId}/quizzes/{quizId}/grades", "/{courseId}/assignments/{assignmentId}/grades"})
-    public ResponseEntity<String> updateGrade(@PathVariable long courseId,
-                                              @PathVariable(required = false) Long quizId,
-                                              @PathVariable(required = false) Long assignmentId,
-                                              @RequestParam long studentId,
+    public ResponseEntity<String> updateGrade(@PathVariable String courseId,
+                                              @PathVariable(required = false) String quizId,
+                                              @PathVariable(required = false) String assignmentId,
+                                              @RequestParam String studentId,
                                               @RequestBody Grade grade) {
         Courses course = new Courses();
         course.setId(courseId);
@@ -160,10 +160,10 @@ public class GradeController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can edit grades
     @DeleteMapping({"/{courseId}/quizzes/{quizId}/grades", "/{courseId}/assignments/{assignmentId}/grades"})
-    public ResponseEntity<String> deleteGrade(@PathVariable long courseId,
-                                              @PathVariable(required = false) Long quizId,
-                                              @PathVariable(required = false) Long assignmentId,
-                                              @RequestParam long studentId) {
+    public ResponseEntity<String> deleteGrade(@PathVariable String courseId,
+                                              @PathVariable(required = false) String quizId,
+                                              @PathVariable(required = false) String assignmentId,
+                                              @RequestParam String studentId) {
         boolean isDeleted;
         if (quizId != null) {
             isDeleted = gradeService.deleteGradeByQuiz(studentId, quizId);

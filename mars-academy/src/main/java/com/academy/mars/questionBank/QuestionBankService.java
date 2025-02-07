@@ -15,18 +15,18 @@ public class QuestionBankService {
     @Autowired
     private CoursesRepository courseRepository;
 
-    public void createQuestionBank(long courseId, QuestionBank questionBank) {
+    public void createQuestionBank(String courseId, QuestionBank questionBank) {
         Courses course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new RuntimeException("Course not found"));
         questionBank.setCourse(course);
         questionBankRepository.save(questionBank);
     }
 
-    public List<QuestionBank> getQuestionBanks(long courseId) {
+    public List<QuestionBank> getQuestionBanks(String courseId) {
         return questionBankRepository.findByCourseId(courseId);
     }
 
-    public boolean deleteQuestionBank(long questionBankId) {
+    public boolean deleteQuestionBank(String questionBankId) {
         if (questionBankRepository.existsById(questionBankId)) {
             questionBankRepository.deleteById(questionBankId);
             return true;
@@ -34,7 +34,7 @@ public class QuestionBankService {
         return false;
     }
 
-    public List<QuestionBank> getQuestionBankByCourse(long courseId) {
+    public List<QuestionBank> getQuestionBankByCourse(String courseId) {
         return questionBankRepository.findByCourseId(courseId);
     }
 }

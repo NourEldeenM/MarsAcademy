@@ -23,7 +23,7 @@ public class LessonsController {
     // Add a new lesson to a course
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
-    public ResponseEntity<?> addLesson(@PathVariable Long courseId, @RequestBody Lessons lesson) {
+    public ResponseEntity<?> addLesson(@PathVariable String courseId, @RequestBody Lessons lesson) {
         try {
             Lessons savedLesson = lessonsServices.addLesson(courseId, lesson);
             return ResponseEntity.status(201).body(savedLesson);
@@ -35,7 +35,7 @@ public class LessonsController {
     // Get all lessons for a specific course
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
-    public ResponseEntity<?> getAllLessons(@PathVariable Long courseId) {
+    public ResponseEntity<?> getAllLessons(@PathVariable String courseId) {
         try{
 
             List<Lessons> lessons = lessonsServices.getAllLessons(courseId);
@@ -49,7 +49,7 @@ public class LessonsController {
     // Get a specific lesson by its ID
     @GetMapping("/{lessonId}")
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
-    public ResponseEntity<?> getLesson(@PathVariable Long lessonId) {
+    public ResponseEntity<?> getLesson(@PathVariable String lessonId) {
         try {
             Lessons lesson = lessonsServices.getLesson(lessonId);
             return ResponseEntity.status(200).body(lesson);
@@ -63,7 +63,7 @@ public class LessonsController {
     // Update an existing lesson
     @PutMapping("/{lessonId}")
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
-    public ResponseEntity<?> updateLesson(@PathVariable Long courseId,@PathVariable Long lessonId, @RequestBody Lessons updatedLesson) {
+    public ResponseEntity<?> updateLesson(@PathVariable String courseId,@PathVariable String lessonId, @RequestBody Lessons updatedLesson) {
         try {
             Lessons updated = lessonsServices.updateLesson(courseId,lessonId, updatedLesson);
             return ResponseEntity.status(200).body(updated);
@@ -77,7 +77,7 @@ public class LessonsController {
     // Delete a lesson by its ID
     @DeleteMapping("/{lessonId}")
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
-    public ResponseEntity<?> deleteLesson(@PathVariable Long courseId,@PathVariable Long lessonId) {
+    public ResponseEntity<?> deleteLesson(@PathVariable String courseId,@PathVariable String lessonId) {
         try {
             lessonsServices.deleteLesson(courseId , lessonId);
             return ResponseEntity.status(200).body(json("message", "Successfully deleted lesson"));
@@ -92,7 +92,7 @@ public class LessonsController {
     //delete all lessons of a course
     @DeleteMapping
     @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<?> deleteAllLessonsOfCourse(@PathVariable Long courseId) {
+    public ResponseEntity<?> deleteAllLessonsOfCourse(@PathVariable String courseId) {
         try {
             lessonsServices.deleteAllLessonsOfCourse(courseId );
             return ResponseEntity.status(200).body(json("message", "lessons deleted Successfully"));

@@ -27,7 +27,7 @@ public class AuthenticationController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody User user) {
         Map<String, Object> response = authService.registerNewUser(user);
-        user.setId((Long) response.get("id"));
+        user.setId((String) response.get("id"));
         response.remove("id");
         String token = jwtService.generateToken(user);
         response.put("token", token);

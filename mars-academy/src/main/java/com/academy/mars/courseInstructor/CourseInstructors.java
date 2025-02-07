@@ -16,9 +16,9 @@ import lombok.Setter;
 public class CourseInstructors {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, unique = true)
-    private Long id;
+    private String id;
 
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = false)

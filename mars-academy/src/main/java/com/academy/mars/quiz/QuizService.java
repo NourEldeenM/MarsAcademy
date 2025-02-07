@@ -24,15 +24,15 @@ public class QuizService {
         quizRepository.save(quiz);
     }
 
-    public List<Quiz> getAllQuizzes(long courseId) {
+    public List<Quiz> getAllQuizzes(String courseId) {
         return quizRepository.findByCourseId(courseId);
     }
 
-    public Optional<Quiz> getQuizById(long courseId, long quizId) {
+    public Optional<Quiz> getQuizById(String courseId, String quizId) {
         return quizRepository.findByIdAndCourseId(quizId, courseId);
     }
 
-    public Quiz updateQuiz(long courseId, long quizId, Quiz updatedQuiz) {
+    public Quiz updateQuiz(String courseId, String quizId, Quiz updatedQuiz) {
         Optional<Quiz> existingQuiz = quizRepository.findByIdAndCourseId(quizId, courseId);
 
         if (existingQuiz.isPresent()) {
@@ -46,7 +46,7 @@ public class QuizService {
         return null;
     }
 
-    public boolean deleteQuiz(long courseId, long quizId) {
+    public boolean deleteQuiz(String courseId, String quizId) {
         Optional<Quiz> quiz = quizRepository.findByIdAndCourseId(quizId, courseId);
         if (quiz.isPresent()) {
             quizRepository.delete(quiz.get());
@@ -56,7 +56,7 @@ public class QuizService {
     }
 
 
-    public void randomizeQuizQuestions(long courseId, long quizId, int questionCount) {
+    public void randomizeQuizQuestions(String courseId, String quizId, int questionCount) {
         List<Question> allQuestions = questionRepository.findByCourseId(courseId);
         if (allQuestions.size() < questionCount) {
             throw new IllegalArgumentException("Not enough questions in the question bank.");
@@ -71,7 +71,7 @@ public class QuizService {
     }
 
 
-    public List<Question> getRandomQuestionsFromBank(long courseId, long quizId, int questionCount) {
+    public List<Question> getRandomQuestionsFromBank(String courseId, String quizId, int questionCount) {
         List<Question> allQuestions = questionRepository.findByCourseId(courseId);
         if (allQuestions.size() < questionCount) {
             throw new IllegalArgumentException("Not enough questions in the question bank.");

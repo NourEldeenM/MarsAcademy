@@ -19,9 +19,9 @@ public class AssignmentSubmissionController {
     @PreAuthorize("hasAnyRole('STUDENT', 'INSTRUCTOR')")    // students can submit assignments
     @PostMapping("/{assignmentId}/submissions")
     public ResponseEntity<AssignmentSubmission> submitAssignment(
-            @PathVariable Long courseId,
-            @PathVariable Long assignmentId,
-            @RequestParam Long studentId,
+            @PathVariable String courseId,
+            @PathVariable String assignmentId,
+            @RequestParam String studentId,
             @RequestParam(required = false) MultipartFile file,
             @RequestParam(required = false) String fileLink) {
 
@@ -44,7 +44,7 @@ public class AssignmentSubmissionController {
     @PreAuthorize("hasAnyRole('INSTRUCTOR', 'STUDENT')")    // instructors and students can get submissions
     @GetMapping("/{assignmentId}/submissions")
     public ResponseEntity<List<AssignmentSubmission>> getSubmissionsByStudentAndCourse(
-            @RequestParam Long studentId, @PathVariable Long courseId) {
+            @RequestParam String studentId, @PathVariable String courseId) {
         List<AssignmentSubmission> submissions = submissionService.getSubmissionsByStudentAndCourse(studentId, courseId);
         if (submissions.isEmpty()) {
             return ResponseEntity.notFound().build();

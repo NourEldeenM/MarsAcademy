@@ -14,11 +14,11 @@ import java.util.List;
 @Setter
 public class Assignment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String title;
     private String description;
-    private long courseId;
+    private String courseId;
     private LocalDate dueDate;
 
     @OneToOne(cascade = CascadeType.ALL)

@@ -19,8 +19,8 @@ import java.util.List;
 @Table(name = "courses")
 public class Courses {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
     private String name;
     private String title;
     private String description;

@@ -7,11 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface LessonsFilesRepository extends JpaRepository<LessonsFiles, Long> {
+public interface LessonsFilesRepository extends JpaRepository<LessonsFiles, String> {
 
     // Get all files associated with a specific lesson
-    List<LessonsFiles> findByLessonId(Long lessonId);
+    List<LessonsFiles> findByLessonId(String lessonId);
 
     // Get file by its ID
-    Optional<LessonsFiles> findById(Long id);
+    Optional<LessonsFiles> findById(String id);
 }

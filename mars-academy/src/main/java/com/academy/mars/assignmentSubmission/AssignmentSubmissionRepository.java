@@ -6,8 +6,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface AssignmentSubmissionRepository extends JpaRepository<AssignmentSubmission, Long> {
-    List<AssignmentSubmission> findByStudentId(Long studentId);
-    List<AssignmentSubmission> findByStudentIdAndCourseId(Long studentId, Long courseId);
+public interface AssignmentSubmissionRepository extends JpaRepository<AssignmentSubmission, String> {
+    List<AssignmentSubmission> findByStudentId(String studentId);
+    List<AssignmentSubmission> findByStudentIdAndCourseId(String studentId, String courseId);
 }
 

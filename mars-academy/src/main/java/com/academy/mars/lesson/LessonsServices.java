@@ -20,7 +20,7 @@ public class LessonsServices {
         this.coursesServices = coursesServices;
     }
 
-    public Lessons addLesson(Long courseId, Lessons lesson) {
+    public Lessons addLesson(String courseId, Lessons lesson) {
         if (!coursesServices.courseExist(courseId)) {
             throw new RuntimeException("There is no Course id with id "+courseId);
         }
@@ -29,11 +29,11 @@ public class LessonsServices {
         return lessonsRepository.save(lesson);
     }
 
-    public List<Lessons> getAllLessons(Long courseId) {
+    public List<Lessons> getAllLessons(String courseId) {
         return lessonsRepository.findByCourseId(courseId);
     }
 
-    public Lessons getLesson(Long lessonId) {
+    public Lessons getLesson(String lessonId) {
         Optional<Lessons> lesson = lessonsRepository.findById( lessonId);
         if(lesson.isEmpty()){
             throw new RuntimeException("There is no Lesson with id "+lessonId);
@@ -41,7 +41,7 @@ public class LessonsServices {
         return lesson.get();
     }
 
-    public Lessons updateLesson(Long courseId, Long lessonId, Lessons updatedLesson) {
+    public Lessons updateLesson(String courseId, String lessonId, Lessons updatedLesson) {
         Optional<Lessons> existingLesson = lessonsRepository.findById( lessonId);
 
         if(existingLesson.isEmpty()){
@@ -58,7 +58,7 @@ public class LessonsServices {
         return lessonsRepository.save(lesson);
     }
 
-    public void deleteLesson( Long courseId,Long lessonId) {
+    public void deleteLesson( String courseId,String lessonId) {
         Optional<Lessons> existingLesson = lessonsRepository.findById( lessonId);
 
         if(existingLesson.isEmpty()){
@@ -70,7 +70,7 @@ public class LessonsServices {
         lessonsRepository.delete(existingLesson.get());
     }
 
-    public void deleteAllLessonsOfCourse( Long courseId) {
+    public void deleteAllLessonsOfCourse( String courseId) {
         List<Lessons> existingLessons = lessonsRepository.findByCourseId( courseId);
 
         if(existingLessons.isEmpty()){

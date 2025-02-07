@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ReportDto {
 
-    private Long studentId;
+    private String studentId;
     private String studentName;
     private String courseName;
     private int grade;

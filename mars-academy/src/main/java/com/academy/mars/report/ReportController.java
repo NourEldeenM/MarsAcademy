@@ -18,7 +18,7 @@ public class ReportController {
     }
 
     @GetMapping("/course/{courseId}")
-    public ResponseEntity<List<ReportDto>> getReportByCourse(@PathVariable Long courseId) {
+    public ResponseEntity<List<ReportDto>> getReportByCourse(@PathVariable String courseId) {
         List<ReportDto> report = reportService.getReportByCourse(courseId);
         return report.isEmpty()
                 ? ResponseEntity.notFound().build()

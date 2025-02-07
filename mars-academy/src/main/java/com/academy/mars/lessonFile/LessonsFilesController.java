@@ -18,7 +18,7 @@ public class LessonsFilesController {
     private LessonsFilesServices lessonsFilesServices;
 
     @PostMapping("/upload/{lessonId}")
-    public ResponseEntity<LessonsFiles> uploadFile(@PathVariable Long lessonId, @RequestParam("file") MultipartFile file) {
+    public ResponseEntity<LessonsFiles> uploadFile(@PathVariable String lessonId, @RequestParam("file") MultipartFile file) {
         try {
             LessonsFiles uploadedFile = lessonsFilesServices.uploadFile(lessonId, file);
             return new ResponseEntity<>(uploadedFile, HttpStatus.CREATED);
@@ -28,7 +28,7 @@ public class LessonsFilesController {
     }
 
     @GetMapping("/lessons/{lessonId}")
-    public ResponseEntity<List<LessonsFiles>> getAllFilesByLessonId(@PathVariable Long lessonId) {
+    public ResponseEntity<List<LessonsFiles>> getAllFilesByLessonId(@PathVariable String lessonId) {
         List<LessonsFiles> files = lessonsFilesServices.getAllFilesByLessonId(lessonId);
         if (files.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -37,21 +37,21 @@ public class LessonsFilesController {
     }
 
     @GetMapping("/{fileId}")
-    public ResponseEntity<LessonsFiles> getFileById(@PathVariable Long fileId) {
+    public ResponseEntity<LessonsFiles> getFileById(@PathVariable String fileId) {
         Optional<LessonsFiles> file = lessonsFilesServices.getFileById(fileId);
         return file.map(ResponseEntity::ok).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 
     @DeleteMapping("/{fileId}")
-    public ResponseEntity<Void> deleteFileById(@PathVariable Long fileId) {
+    public ResponseEntity<Void> deleteFileById(@PathVariable String fileId) {
         lessonsFilesServices.deleteFileById(fileId);
         return ResponseEntity.noContent().build();
     }
 
 
     @DeleteMapping("/lessons/{lessonId}")
-    public ResponseEntity<Void> deleteAllFilesByLessonId(@PathVariable Long lessonId) {
+    public ResponseEntity<Void> deleteAllFilesByLessonId(@PathVariable String lessonId) {
         lessonsFilesServices.deleteAllFilesByLessonId(lessonId);
         return ResponseEntity.noContent().build();
     }

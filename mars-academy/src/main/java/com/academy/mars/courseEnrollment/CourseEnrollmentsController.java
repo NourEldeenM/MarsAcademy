@@ -22,8 +22,8 @@ public class CourseEnrollmentsController {
     // Get all students enrolled in a course
     @GetMapping("/students")
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR')")
-    public ResponseEntity<?> getStudentsEnrollInACourse(@RequestBody Map<String, Long> request) {
-        Long courseId = request.get("courseId");
+    public ResponseEntity<?> getStudentsEnrollInACourse(@RequestBody Map<String, String> request) {
+        String courseId = request.get("courseId");
         if(courseId==null){
             return ResponseEntity.status(400).body(json("Error", "course id must be sent in body"));
         }
@@ -41,8 +41,8 @@ public class CourseEnrollmentsController {
     // Get all courses a specific student is enrolled in
     @GetMapping("/courses")
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
-    public ResponseEntity<?> getCoursesOfStudent(@RequestBody Map<String, Long> request) {
-        Long studentId = request.get("studentId");
+    public ResponseEntity<?> getCoursesOfStudent(@RequestBody Map<String, String> request) {
+        String studentId = request.get("studentId");
         if(studentId==null){
             return ResponseEntity.status(400).body(json("Error", "student id must be sent in body"));
         }
@@ -60,9 +60,9 @@ public class CourseEnrollmentsController {
     // Enroll a student in a course
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
-    public ResponseEntity<?> studentEnrollInACourse(@RequestBody Map<String, Long> request) {
-        Long courseId = request.get("courseId");
-        Long studentId = request.get("studentId");
+    public ResponseEntity<?> studentEnrollInACourse(@RequestBody Map<String, String> request) {
+        String courseId = request.get("courseId");
+        String studentId = request.get("studentId");
         if(studentId==null){
             return ResponseEntity.status(400).body(json("Error", "student id must be sent in body"));
         }
@@ -80,9 +80,9 @@ public class CourseEnrollmentsController {
     // Unenroll a student from a course
     @DeleteMapping
     @PreAuthorize("hasAnyRole('ADMIN','INSTRUCTOR','STUDENT')")
-    public ResponseEntity<?> studentUnenrollInACourse(@RequestBody Map<String, Long> request) {
-        Long courseId = request.get("courseId");
-        Long studentId = request.get("studentId");
+    public ResponseEntity<?> studentUnenrollInACourse(@RequestBody Map<String, String> request) {
+        String courseId = request.get("courseId");
+        String studentId = request.get("studentId");
         if(studentId==null){
             return ResponseEntity.status(400).body(json("Error", "student id must be sent in body"));
         }

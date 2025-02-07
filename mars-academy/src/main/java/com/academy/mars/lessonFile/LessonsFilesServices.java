@@ -20,7 +20,7 @@ public class LessonsFilesServices {
     private LessonsRepository lessonRepository;
 
 
-    public LessonsFiles uploadFile(Long lessonId, MultipartFile file) throws IOException {
+    public LessonsFiles uploadFile(String lessonId, MultipartFile file) throws IOException {
         // Retrieve the lesson by its ID
         Lessons lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new RuntimeException("Lesson not found"));
@@ -37,19 +37,19 @@ public class LessonsFilesServices {
         return lessonsFilesRepository.save(lessonsFiles);
     }
 
-    public List<LessonsFiles> getAllFilesByLessonId(Long lessonId) {
+    public List<LessonsFiles> getAllFilesByLessonId(String lessonId) {
         return lessonsFilesRepository.findByLessonId(lessonId);
     }
 
-    public Optional<LessonsFiles> getFileById(Long fileId) {
+    public Optional<LessonsFiles> getFileById(String fileId) {
         return lessonsFilesRepository.findById(fileId);
     }
 
-    public void deleteFileById(Long fileId) {
+    public void deleteFileById(String fileId) {
         lessonsFilesRepository.deleteById(fileId);
     }
 
-    public void deleteAllFilesByLessonId(Long lessonId) {
+    public void deleteAllFilesByLessonId(String lessonId) {
         List<LessonsFiles> files = lessonsFilesRepository.findByLessonId(lessonId);
         lessonsFilesRepository.deleteAll(files);
     }

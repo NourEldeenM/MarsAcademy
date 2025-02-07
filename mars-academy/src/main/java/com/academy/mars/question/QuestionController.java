@@ -34,9 +34,9 @@ public class QuestionController {
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can create questions
     @PostMapping("/quiz/{quizId}")
     public ResponseEntity<Question> createQuestionForQuiz(
-            @PathVariable long courseId,
-            @PathVariable long questionBankId,
-            @PathVariable long quizId,
+            @PathVariable String courseId,
+            @PathVariable String questionBankId,
+            @PathVariable String quizId,
             @RequestBody Question question) {
         Quiz quiz = quizRepository.findById(quizId)
                 .orElseThrow(() -> new IllegalArgumentException("Quiz not found with id: " + quizId));
@@ -49,9 +49,9 @@ public class QuestionController {
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can create questions
     @PostMapping("/assignment/{assignmentId}")
     public ResponseEntity<Question> createQuestionForAssignment(
-            @PathVariable long courseId,
-            @PathVariable long questionBankId,
-            @PathVariable long assignmentId,
+            @PathVariable String courseId,
+            @PathVariable String questionBankId,
+            @PathVariable String assignmentId,
             @RequestBody Question question) {
         Assignment assignment = assignmentRepository.findById(assignmentId)
                 .orElseThrow(() -> new IllegalArgumentException("Assignment not found with id: " + assignmentId));
@@ -64,10 +64,10 @@ public class QuestionController {
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can get all questions for quiz / assessment
     @GetMapping
     public List<Question> getAllQuestions(
-            @PathVariable long courseId,
-            @PathVariable long questionBankId,
-            @RequestParam(required = false) Long quizId,
-            @RequestParam(required = false) Long assignmentId) {
+            @PathVariable String courseId,
+            @PathVariable String questionBankId,
+            @RequestParam(required = false) String quizId,
+            @RequestParam(required = false) String assignmentId) {
         if (quizId != null) {
             return questionService.getQuestionsByQuiz(quizId);
         } else if (assignmentId != null) {
@@ -78,16 +78,16 @@ public class QuestionController {
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can edit questions
     @PatchMapping("/{questionId}")
-    public String updateQuestion(@PathVariable long courseId, @PathVariable long questionBankId,
-                                 @PathVariable long questionId, @RequestBody Question question) {
+    public String updateQuestion(@PathVariable String courseId, @PathVariable String questionBankId,
+                                 @PathVariable String questionId, @RequestBody Question question) {
         questionService.updateQuestion(questionId, question);
         return "Question updated successfully!";
     }
 
     @PreAuthorize("hasAnyRole('INSTRUCTOR')")    // only instructors can delete questions
     @DeleteMapping("/{questionId}")
-    public String deleteQuestion(@PathVariable long courseId, @PathVariable long questionBankId,
-                                 @PathVariable long questionId) {
+    public String deleteQuestion(@PathVariable String courseId, @PathVariable String questionBankId,
+                                 @PathVariable String questionId) {
         boolean deleted = questionService.deleteQuestion(questionId);
         if (deleted) {
             return "Question deleted successfully!";

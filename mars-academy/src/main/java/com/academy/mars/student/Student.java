@@ -16,7 +16,8 @@ import java.util.Set;
 public class Student {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @OneToOne
     @MapsId

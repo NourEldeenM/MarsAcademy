@@ -19,7 +19,7 @@ public class LessonsOtpServices {
     private LessonsServices lessonsServices;
 
     // POST: Create OTP for a lesson
-    public LessonsOtp createOtpForLesson(Long lessonId) {
+    public LessonsOtp createOtpForLesson(String lessonId) {
 
         Lessons lesson = lessonsServices.getLesson(lessonId);
         if (lesson == null) {
@@ -34,7 +34,7 @@ public class LessonsOtpServices {
     }
 
     // GET: Get OTP of a lesson
-    public LessonsOtp getOtpForLesson(Long lessonId) {
+    public LessonsOtp getOtpForLesson(String lessonId) {
         Lessons lesson=lessonsServices.getLesson(lessonId);
         Optional<LessonsOtp> lessonsOtp = lessonsOtpRepository.findByLesson(lesson);
         if (lessonsOtp.isPresent()) {
@@ -45,7 +45,7 @@ public class LessonsOtpServices {
     }
 
     // PUT: Update OTP for a lesson
-    public LessonsOtp updateOtpForLesson(Long lessonId) {
+    public LessonsOtp updateOtpForLesson(String lessonId) {
         Lessons lesson = lessonsServices.getLesson(lessonId);
 
         Optional<LessonsOtp> optionalLessonsOtp = lessonsOtpRepository.findByLesson(lesson);
@@ -66,7 +66,7 @@ public class LessonsOtpServices {
     }
 
     // DELETE: Delete OTP of a lesson
-    public void deleteOtpForLesson(Long lessonId) {
+    public void deleteOtpForLesson(String lessonId) {
         Lessons lesson = lessonsServices.getLesson(lessonId);
 
         Optional<LessonsOtp> optionalLessonsOtp = lessonsOtpRepository.findByLesson(lesson);

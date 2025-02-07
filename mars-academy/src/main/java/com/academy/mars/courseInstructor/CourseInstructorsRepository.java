@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CourseInstructorsRepository extends JpaRepository<CourseInstructors, Long> {
+public interface CourseInstructorsRepository extends JpaRepository<CourseInstructors, String> {
 
     // Find all instructors for a given course
     List<CourseInstructors> findByCourse(Courses course);
